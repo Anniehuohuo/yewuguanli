@@ -1,0 +1,113 @@
+<!--pages/business/list/list.wxml-->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <image class="search-icon" src="/images/icon/搜索.png" mode="aspectFit"></image>
+      <input 
+        class="search-input"
+        type="text"
+        placeholder="搜索业务标题、客户或描述"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        confirm-type="search"
+      />
+      <view class="clear-btn" wx:if="{{searchKeyword}}" bindtap="onClearSearch">
+        <image src="/images/icon/关闭.png" mode="aspectFit"></image>
+      </view>
+    </view>
+    <view class="filter-btn" bindtap="toggleFilter">
+      <image src="/images/icon/筛选.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <!-- 筛选器 -->
+  <view class="filter-panel" wx:if="{{showFilter}}">
+    <view class="filter-title">按状态筛选</view>
+    <view class="filter-options">
+      <view 
+        class="filter-option {{statusFilter === item.value ? 'active' : ''}}"
+        wx:for="{{statusOptions}}"
+        wx:key="value"
+        data-status="{{item.value}}"
+        bindtap="onStatusFilter"
+      >
+        <text class="filter-label">{{item.label}}</text>
+        <view class="filter-indicator" style="background-color: {{item.color}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 业务列表 -->
+  <view class="business-list">
+    <view wx:if="{{loading}}" class="loading">
+      <view class="loading-text">加载中...</view>
+    </view>
+    
+    <view wx:elif="{{filteredBusinesses.length === 0}}" class="empty-state">
+      <image class="empty-icon" src="/images/icon/空状态.png" mode="aspectFit"></image>
+      <text class="empty-text">{{searchKeyword || statusFilter !== 'all' ? '没有找到相关业务' : '暂无业务记录'}}</text>
+      <view class="empty-action" wx:if="{{!searchKeyword && statusFilter === 'all'}}" bindtap="onAddBusiness">
+        <text>创建第一个业务</text>
+      </view>
+    </view>
+    
+    <view wx:else>
+      <view 
+        class="business-item"
+        wx:for="{{filteredBusinesses}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onViewBusiness"
+      >
+        <view class="business-header">
+          <view class="business-title">{{item.title}}</view>
+          <view class="business-actions">
+            <view class="action-btn edit-btn" data-id="{{item.id}}" bindtap="onEditBusiness">
+              <image src="/images/icon/编辑.png" mode="aspectFit"></image>
+            </view>
+            <view class="action-btn delete-btn" data-id="{{item.id}}" bindtap="onDeleteBusiness">
+              <image src="/images/icon/删除.png" mode="aspectFit"></image>
+            </view>
+          </view>
+        </view>
+        
+        <view class="business-info">
+          <view class="info-row">
+            <text class="info-label">客户：</text>
+            <text class="info-value">{{item.customerName}}</text>
+          </view>
+          <view class="info-row" wx:if="{{item.amount}}">
+            <text class="info-label">金额：</text>
+            <text class="info-value amount">¥{{item.amount}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-label">创建：</text>
+            <text class="info-value">{{formatDate(item.createTime)}}</text>
+          </view>
+        </view>
+        
+        <view class="business-footer">
+          <view class="business-status">
+            <view 
+              class="status-tag"
+              style="background-color: {{getStatusInfo(item.status).color}}20; color: {{getStatusInfo(item.status).color}}"
+            >
+              {{getStatusInfo(item.status).label}}
+            </view>
+          </view>
+          <view class="business-priority" wx:if="{{item.priority}}">
+            <view class="priority-tag priority-{{item.priority}}">
+              {{item.priority === 'high' ? '高' : item.priority === 'medium' ? '中' : '低'}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab" bindtap="onAddBusiness">
+    <image src="/images/icon/添加.png" mode="aspectFit"></image>
+  </view>
+</view>
