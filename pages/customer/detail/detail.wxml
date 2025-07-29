@@ -1,0 +1,119 @@
+<!--pages/customer/detail/detail.wxml-->
+<view class="container" wx:if="{{customer}}">
+  <!-- 客户基本信息 -->
+  <view class="customer-card">
+    <view class="customer-header">
+      <view class="customer-avatar">
+        <text class="avatar-text">{{customer.name.charAt(0)}}</text>
+      </view>
+      <view class="customer-basic">
+        <view class="customer-name">
+          {{customer.name}}
+          <text class="customer-category category-{{customer.category}}">{{customer.category}}类</text>
+        </view>
+        <view class="customer-company">{{customer.company}}</view>
+      </view>
+    </view>
+    
+    <view class="customer-actions">
+      <view class="action-btn call-btn" bindtap="onCallTap">
+        <image class="action-icon" src="/images/icon/电话.png" mode="aspectFit"></image>
+        <text class="action-text">拨打</text>
+      </view>
+      <view class="action-btn message-btn" bindtap="onMessageTap">
+        <image class="action-icon" src="/images/icon/短信.png" mode="aspectFit"></image>
+        <text class="action-text">短信</text>
+      </view>
+      <view class="action-btn edit-btn" bindtap="onEditTap">
+        <image class="action-icon" src="/images/icon/编辑.png" mode="aspectFit"></image>
+        <text class="action-text">编辑</text>
+      </view>
+      <view class="action-btn delete-btn" bindtap="onDeleteTap">
+        <image class="action-icon" src="/images/icon/删除.png" mode="aspectFit"></image>
+        <text class="action-text">删除</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 详细信息 -->
+  <view class="detail-card">
+    <view class="card-title">详细信息</view>
+    <view class="detail-list">
+      <view class="detail-item">
+        <text class="detail-label">联系电话</text>
+        <text class="detail-value">{{customer.phone}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">电子邮箱</text>
+        <text class="detail-value">{{customer.email || '未填写'}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">公司地址</text>
+        <text class="detail-value">{{customer.address || '未填写'}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">客户类别</text>
+        <text class="detail-value category-{{customer.category}}">{{customer.category}}类客户</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">创建时间</text>
+        <text class="detail-value">{{customer.createTime}}</text>
+      </view>
+      <view class="detail-item" wx:if="{{customer.remark}}">
+        <text class="detail-label">备注信息</text>
+        <text class="detail-value">{{customer.remark}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 相关订单 -->
+  <view class="orders-card">
+    <view class="card-header">
+      <text class="card-title">相关订单 ({{orders.length}})</text>
+      <view class="new-order-btn" bindtap="onNewOrderTap">
+        <image class="btn-icon" src="/images/icon/添加.png" mode="aspectFit"></image>
+        <text class="btn-text">新建</text>
+      </view>
+    </view>
+    
+    <view class="orders-list" wx:if="{{orders.length > 0}}">
+      <view 
+        class="order-item"
+        wx:for="{{orders}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onOrderTap"
+      >
+        <view class="order-info">
+          <view class="order-title">{{item.title}}</view>
+          <view class="order-meta">
+            <text class="order-amount">¥{{item.amount}}</text>
+            <text class="order-status status-{{item.status}}">{{item.statusText}}</text>
+          </view>
+          <view class="order-time">{{item.createTime}}</view>
+        </view>
+        <view class="order-arrow">
+          <image class="arrow-icon" src="/images/icon/箭头右.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+    
+    <view class="empty-orders" wx:else>
+      <image class="empty-icon" src="/images/icon/空状态.png" mode="aspectFit"></image>
+      <text class="empty-text">暂无相关订单</text>
+      <view class="empty-action" bindtap="onNewOrderTap">创建订单</view>
+    </view>
+  </view>
+</view>
+
+<!-- 删除确认弹窗 -->
+<view class="modal-overlay" wx:if="{{showDeleteModal}}" bindtap="onCancelDelete">
+  <view class="modal-content" catchtap="">
+    <view class="modal-title">确认删除</view>
+    <view class="modal-message">删除后将无法恢复，确定要删除该客户吗？</view>
+    <view class="modal-actions">
+      <view class="modal-btn cancel-btn" bindtap="onCancelDelete">取消</view>
+      <view class="modal-btn confirm-btn" bindtap="onConfirmDelete">确定</view>
+    </view>
+  </view>
+</view>
