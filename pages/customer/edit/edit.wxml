@@ -1,0 +1,115 @@
+<!--pages/customer/edit/edit.wxml-->
+<view class="container">
+  <form>
+    <!-- 基本信息 -->
+    <view class="form-section">
+      <view class="section-title">基本信息</view>
+      
+      <view class="form-item">
+        <view class="form-label required">客户姓名</view>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="请输入客户姓名"
+          value="{{formData.name}}"
+          data-field="name"
+          bindinput="onInputChange"
+          maxlength="20"
+        />
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label required">公司名称</view>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="请输入公司名称"
+          value="{{formData.company}}"
+          data-field="company"
+          bindinput="onInputChange"
+          maxlength="50"
+        />
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label required">联系电话</view>
+        <input 
+          class="form-input"
+          type="number"
+          placeholder="请输入手机号码"
+          value="{{formData.phone}}"
+          data-field="phone"
+          bindinput="onInputChange"
+          maxlength="11"
+        />
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label">电子邮箱</view>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="请输入邮箱地址（可选）"
+          value="{{formData.email}}"
+          data-field="email"
+          bindinput="onInputChange"
+          maxlength="50"
+        />
+      </view>
+    </view>
+
+    <!-- 详细信息 -->
+    <view class="form-section">
+      <view class="section-title">详细信息</view>
+      
+      <view class="form-item">
+        <view class="form-label">公司地址</view>
+        <textarea 
+          class="form-textarea"
+          placeholder="请输入公司地址（可选）"
+          value="{{formData.address}}"
+          data-field="address"
+          bindinput="onInputChange"
+          maxlength="200"
+          auto-height
+        ></textarea>
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label required">客户类别</view>
+        <picker 
+          class="form-picker"
+          mode="selector"
+          range="{{categoryOptions}}"
+          range-key="label"
+          value="{{formData.category === 'A' ? 0 : formData.category === 'B' ? 1 : 2}}"
+          bindchange="onCategoryChange"
+        >
+          <view class="picker-content">
+            <text class="picker-text">{{categoryOptions[formData.category === 'A' ? 0 : formData.category === 'B' ? 1 : 2].label}}</text>
+            <image class="picker-arrow" src="/images/icon/箭头下.png" mode="aspectFit"></image>
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label">备注信息</view>
+        <textarea 
+          class="form-textarea"
+          placeholder="请输入备注信息（可选）"
+          value="{{formData.remark}}"
+          data-field="remark"
+          bindinput="onInputChange"
+          maxlength="500"
+          auto-height
+        ></textarea>
+      </view>
+    </view>
+  </form>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <view class="action-btn cancel-btn" bindtap="onCancel">取消</view>
+    <view class="action-btn save-btn" bindtap="onSave">{{isEdit ? '保存' : '创建'}}</view>
+  </view>
+</view>
