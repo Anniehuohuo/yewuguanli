@@ -1,0 +1,332 @@
+/* pages/business/manage/manage.wxss */
+.container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20rpx;
+}
+
+/* 搜索栏 */
+.search-bar {
+  background-color: #fff;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 25rpx;
+  padding: 0 20rpx;
+}
+
+.search-input {
+  flex: 1;
+  height: 70rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.search-btn {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1890ff;
+  border-radius: 50%;
+  margin-left: 10rpx;
+}
+
+.search-icon {
+  color: #fff;
+  font-size: 24rpx;
+}
+
+/* 添加按钮 */
+.add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #52c41a;
+  color: #fff;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.add-icon {
+  font-size: 32rpx;
+  margin-right: 10rpx;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200rpx;
+  color: #999;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 商家列表 */
+.business-list {
+  /* 商家列表容器 */
+}
+
+.business-item {
+  background-color: #fff;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.business-info {
+  padding: 30rpx;
+}
+
+.business-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.business-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
+
+.business-status {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+.business-status.active {
+  background-color: #52c41a;
+}
+
+.business-status.inactive {
+  background-color: #ff4d4f;
+}
+
+.business-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.business-category {
+  background-color: #e8f4fd;
+  color: #1890ff;
+  padding: 6rpx 12rpx;
+  border-radius: 15rpx;
+  font-size: 24rpx;
+  margin-right: 20rpx;
+}
+
+.business-rating {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.business-contact {
+  /* 联系信息容器 */
+}
+
+.business-address {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.business-phone {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 操作按钮 */
+.business-actions {
+  display: flex;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.action-btn {
+  flex: 1;
+  text-align: center;
+  padding: 25rpx 0;
+  font-size: 28rpx;
+  border-right: 1rpx solid #f0f0f0;
+}
+
+.action-btn:last-child {
+  border-right: none;
+}
+
+.edit-btn {
+  color: #1890ff;
+}
+
+.status-btn {
+  color: #faad14;
+}
+
+.delete-btn {
+  color: #ff4d4f;
+}
+
+/* 模态框 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  width: 90%;
+  max-height: 80%;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  color: #999;
+}
+
+.modal-body {
+  padding: 30rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #d9d9d9;
+  border-radius: 6rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 20rpx;
+  border: 1rpx solid #d9d9d9;
+  border-radius: 6rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.form-picker {
+  width: 100%;
+}
+
+.picker-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #d9d9d9;
+  border-radius: 6rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.picker-display .placeholder {
+  color: #999;
+}
+
+.picker-arrow {
+  color: #ccc;
+}
+
+.modal-footer {
+  display: flex;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.modal-btn {
+  flex: 1;
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 28rpx;
+  border-right: 1rpx solid #f0f0f0;
+}
+
+.modal-btn:last-child {
+  border-right: none;
+}
+
+.cancel-btn {
+  color: #666;
+}
+
+.confirm-btn {
+  color: #1890ff;
+  font-weight: bold;
+}
