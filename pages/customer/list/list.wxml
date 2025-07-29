@@ -1,0 +1,78 @@
+<!--pages/customer/list/list.wxml-->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <image class="search-icon" src="/images/icon/搜索.png" mode="aspectFit"></image>
+      <input 
+        class="search-input" 
+        placeholder="搜索客户姓名、公司或电话"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+      />
+    </view>
+    <view class="filter-btn" bindtap="toggleFilter">
+      <image class="filter-icon" src="/images/icon/筛选.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <!-- 筛选面板 -->
+  <view class="filter-panel" wx:if="{{showFilter}}">
+    <view class="filter-title">客户类别</view>
+    <view class="filter-options">
+      <view 
+        class="filter-option {{selectedCategory === item.value ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="value"
+        data-category="{{item.value}}"
+        bindtap="onCategorySelect"
+      >
+        {{item.label}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 客户列表 -->
+  <view class="customer-list" wx:if="{{filteredCustomers.length > 0}}">
+    <view 
+      class="customer-item"
+      wx:for="{{filteredCustomers}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onCustomerTap"
+    >
+      <view class="customer-avatar">
+        <text class="avatar-text">{{item.name.charAt(0)}}</text>
+      </view>
+      <view class="customer-info">
+        <view class="customer-name">
+          {{item.name}}
+          <text class="customer-category category-{{item.category}}">{{item.category}}类</text>
+        </view>
+        <view class="customer-company">{{item.company}}</view>
+        <view class="customer-phone">{{item.phone}}</view>
+      </view>
+      <view class="customer-actions">
+        <view 
+          class="action-btn call-btn"
+          data-phone="{{item.phone}}"
+          bindtap="onCallTap"
+        >
+          <image class="action-icon" src="/images/icon/电话.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <image class="empty-icon" src="/images/icon/空状态.png" mode="aspectFit"></image>
+    <view class="empty-text">暂无客户数据</view>
+    <view class="empty-action" bindtap="onAddCustomer">添加客户</view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="add-btn" bindtap="onAddCustomer">
+    <image class="add-icon" src="/images/icon/添加.png" mode="aspectFit"></image>
+  </view>
+</view>
