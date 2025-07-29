@@ -1,0 +1,109 @@
+<!-- 统计页面 -->
+<view class="container">
+  <!-- 页面头部 -->
+  <view class="page-header">
+    <text class="page-title">数据统计</text>
+  </view>
+  
+  <!-- 时间筛选 -->
+  <view class="filter-card">
+    <view class="filter-section">
+      <view class="filter-options">
+        <view class="filter-item {{timeFilter === 'today' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="today">
+          <text class="filter-text">今日</text>
+        </view>
+        <view class="filter-item {{timeFilter === 'week' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="week">
+          <text class="filter-text">本周</text>
+        </view>
+        <view class="filter-item {{timeFilter === 'month' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="month">
+          <text class="filter-text">本月</text>
+        </view>
+        <view class="filter-item {{timeFilter === 'year' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="year">
+          <text class="filter-text">本年</text>
+        </view>
+        <view class="filter-item {{timeFilter === 'custom' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="custom">
+          <text class="filter-text">自定义</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 自定义日期选择 -->
+    <view class="date-selector" wx:if="{{timeFilter === 'custom'}}">
+      <view class="date-range">
+        <view class="date-item">
+          <view class="date-label">开始日期</view>
+          <picker mode="date" value="{{startDate}}" bindchange="bindStartDateChange">
+            <view class="date-value">
+              <text class="date-text">{{startDate || '选择日期'}}</text>
+              <text class="date-icon">📅</text>
+            </view>
+          </picker>
+        </view>
+        
+        <view class="date-separator">至</view>
+        
+        <view class="date-item">
+          <view class="date-label">结束日期</view>
+          <picker mode="date" value="{{endDate}}" bindchange="bindEndDateChange">
+            <view class="date-value">
+              <text class="date-text">{{endDate || '选择日期'}}</text>
+              <text class="date-icon">📅</text>
+            </view>
+          </picker>
+        </view>
+      </view>
+      
+      <view class="search-btn" bindtap="searchData">
+        <text class="search-icon">🔍</text>
+        <text class="search-text">查询</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 数据看板 -->
+  <view class="dashboard-grid">
+    <view class="dashboard-card customer-card" bindtap="viewCustomerDetail">
+      <view class="card-header">
+        <view class="card-icon">👥</view>
+        <view class="card-trend">+{{statistics.customerGrowth || 0}}</view>
+      </view>
+      <view class="card-content">
+        <view class="card-value">{{statistics.totalCustomers}}</view>
+        <view class="card-label">客户总数</view>
+      </view>
+    </view>
+    
+    <view class="dashboard-card visit-card" bindtap="viewVisitDetail">
+      <view class="card-header">
+        <view class="card-icon">📝</view>
+        <view class="card-trend">+{{statistics.visitGrowth || 0}}</view>
+      </view>
+      <view class="card-content">
+        <view class="card-value">{{statistics.totalVisits}}</view>
+        <view class="card-label">拜访次数</view>
+      </view>
+    </view>
+    
+    <view class="dashboard-card checkin-card" bindtap="viewCheckinDetail">
+      <view class="card-header">
+        <view class="card-icon">📍</view>
+        <view class="card-trend">+{{statistics.checkinGrowth || 0}}</view>
+      </view>
+      <view class="card-content">
+        <view class="card-value">{{statistics.totalCheckins}}</view>
+        <view class="card-label">打卡次数</view>
+      </view>
+    </view>
+    
+    <view class="dashboard-card photo-card" bindtap="viewPhotoDetail">
+      <view class="card-header">
+        <view class="card-icon">📷</view>
+        <view class="card-trend">+{{statistics.photoGrowth || 0}}</view>
+      </view>
+      <view class="card-content">
+        <view class="card-value">{{statistics.totalPhotos}}</view>
+        <view class="card-label">拍照数量</view>
+      </view>
+    </view>
+  </view>
+</view>
