@@ -1,0 +1,60 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/customer/list/list",
+    "pages/customer/detail/detail",
+    "pages/customer/edit/edit",
+    "pages/customer/nearby/nearby",
+    "pages/visit/list/list",
+    "pages/visit/detail/detail",
+    "pages/visit/form/form",
+    "pages/visit/plan/plan",
+    "pages/visit/checkin/checkin",
+    "pages/statistics/statistics"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#007aff",
+    "navigationBarTitleText": "客户走访管理",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#007aff",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/icon/导航-首页前.png",
+        "selectedIconPath": "images/icon/导航-首页后.png"
+      },
+      {
+        "pagePath": "pages/customer/list/list",
+        "text": "客户",
+        "iconPath": "images/icon/客户前.png",
+        "selectedIconPath": "images/icon/客户后.png"
+      },
+      {
+        "pagePath": "pages/visit/list/list",
+        "text": "拜访",
+        "iconPath": "images/icon/拜访前.png",
+        "selectedIconPath": "images/icon/拜访后.png"
+      },
+      {
+        "pagePath": "pages/statistics/statistics",
+        "text": "统计",
+        "iconPath": "images/icon/统计前.png",
+        "selectedIconPath": "images/icon/统计后.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于客户拜访打卡功能"
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
