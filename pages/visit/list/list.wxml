@@ -1,0 +1,199 @@
+<!-- pages/visit/list/list.wxml -->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-section">
+    <view class="search-bar">
+      <view class="search-icon">🔍</view>
+      <input type="text" placeholder="搜索客户名称" confirm-type="search" bindinput="onSearchInput" value="{{searchKeyword}}" class="search-input"/>
+      <view class="filter-btn" bindtap="showFilterModal">
+        <text class="filter-text">筛选</text>
+        <text class="filter-icon">⚙️</text>
+      </view>
+      <view class="edit-btn" bindtap="toggleEditMode">
+        <text class="edit-text">{{editMode ? '完成' : '编辑'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 批量操作栏 -->
+  <view class="batch-actions" wx:if="{{editMode}}">
+    <view class="batch-left">
+    <view class="select-all-btn" bindtap="toggleSelectAll">
+      <text class="select-all-text">{{selectedVisits.length === filteredVisits.length && filteredVisits.length > 0 ? '取消全选' : '全选'}}</text>
+    </view>
+    <text class="selected-count">已选择 {{selectedVisits.length}} 项</text>
+  </view>
+  <view class="batch-right">
+    <button class="batch-delete-btn" bindtap="batchDeleteVisits" disabled="{{selectedVisits.length === 0}}">
+      <text class="btn-text">删除</text>
+    </button>
+  </view>
+  </view>
+  
+  筛选条件
+  <view class="filter-tags-section" wx:if="{{activeFilters.length > 0}}">
+    <scroll-view class="filter-tags" scroll-x="true">
+      <view class="filter-tag" wx:for="{{activeFilters}}" wx:key="*this" bindtap="removeFilter" data-filter="{{item}}">
+        <text class="tag-text">{{item}}</text>
+        <text class="tag-close">×</text>
+      </view>
+    </scroll-view>
+    <view class="filter-actions">
+      <view class="export-btn" bindtap="exportVisitDetails">
+        <text>📄 导出</text>
+      </view>
+      <view class="clear-all-btn" bindtap="clearFilters">
+        <text>清除</text>
+      </view>
+    </view>
+  </view> -->
+  
+  <!-- 导出按钮（当有筛选结果时显示） -->
+  <view class="export-section" wx:if="{{filteredVisits.length > 0 && activeFilters.length === 0}}">
+    <view class="export-btn-main" bindtap="exportVisitDetails">
+      <text class="export-icon">📄</text>
+      <text class="export-text">导出拜访详情</text>
+    </view>
+  </view>
+  
+  <!-- 拜访记录列表 -->
+  <view class="visit-list" wx:if="{{filteredVisits.length > 0}}">
+    <view class="visit-card {{editMode ? 'edit-mode' : ''}} {{selectedVisits.indexOf(item.id) > -1 ? 'selected' : ''}}" wx:for="{{filteredVisits}}" wx:key="id" bindtap="{{editMode ? 'toggleSelectVisit' : 'viewVisitDetail'}}" data-id="{{item.id}}">
+      <view class="card-header">
+        <!-- 编辑模式下的选择框 -->
+        <view class="delete-indicator" wx:if="{{editMode && selectedVisits.indexOf(item.id) > -1}}">
+          <text class="delete-icon">🗑️</text>
+        </view>
+
+        <view class="customer-section">
+          <view class="customer-avatar">{{item.customerName.charAt(0)}}</view>
+          <view class="customer-info">
+            <view class="customer-name">{{item.customerName}}</view>
+            <view class="visit-time">📅 {{item.visitTime}}</view>
+          </view>
+        </view>
+        <view class="status-indicator" wx:if="{{!editMode}}"></view>
+      </view>
+      
+      <view class="card-content">
+        <view class="info-row">
+          <view class="info-icon">🏗️</view>
+          <view class="info-content">
+            <text class="info-label">开发情况</text>
+            <view class="development-tags">
+              <view class="dev-tag">城光学院  </view>
+            </view>
+          </view>
+        </view>
+        
+        <view class="info-row" wx:if="{{item.problem}}">
+          <view class="info-icon">⚠️</view>
+          <view class="info-content">
+            <text class="info-label">问题</text>
+            <text class="info-text">{{item.problem}}</text>
+          </view>
+        </view>
+        
+        <view class="info-row" wx:if="{{item.solution}}">
+          <view class="info-icon">💡</view>
+          <view class="info-content">
+            <text class="info-label">解决方案</text>
+            <text class="info-text">{{item.solution}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="card-footer">
+        <view class="footer-left">
+          <view class="photo-badge" wx:if="{{item.photoCount > 0}}">
+            <text class="photo-icon">📷</text>
+            <text class="photo-count">{{item.photoCount}}</text>
+          </view>
+        </view>
+        <view class="footer-actions">
+          <view class="action-btn call-btn" catchtap="callCustomer" data-phone="{{item.customerPhone}}" data-index="{{index}}">
+            <text class="btn-icon">📞</text>
+            <text class="btn-text">拨打</text>
+          </view>
+          <view class="action-btn view-btn" catchtap="navigateToCustomer" data-id="{{item.customerId}}" data-index="{{index}}">
+            <text class="btn-icon">👤</text>
+            <text class="btn-text">客户</text>
+          </view>
+          <view class="action-btn delete-btn" catchtap="deleteVisit" data-id="{{item.id}}" wx:if="{{!editMode}}">
+            <text class="btn-icon">🗑️</text>
+            <text class="btn-text">删除</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <view class="empty-content">
+      <view class="empty-icon">📝</view>
+      <text class="empty-title">暂无拜访记录</text>
+      <text class="empty-desc">点击右下角按钮添加拜访记录</text>
+    </view>
+  </view>
+  
+  <!-- 悬浮添加按钮 -->
+  <!-- <view class="fab-btn" bindtap="addVisit">
+    <text class="fab-icon">+</text>
+  </view> -->
+  
+  <!-- 筛选弹窗 -->
+  <view class="filter-modal" wx:if="{{showFilter}}">
+    <view class="filter-panel">
+      <view class="filter-header">
+        <text class="filter-title">筛选条件</text>
+        <text class="close-btn" bindtap="hideFilterModal">×</text>
+      </view>
+      
+      <view class="filter-section">
+        <view class="section-title">时间范围</view>
+        <view class="filter-options">
+          <view class="filter-option {{timeRange === 'all' ? 'active' : ''}}" bindtap="setTimeRange" data-range="all">全部</view>
+          <view class="filter-option {{timeRange === 'today' ? 'active' : ''}}" bindtap="setTimeRange" data-range="today">今天</view>
+          <view class="filter-option {{timeRange === 'week' ? 'active' : ''}}" bindtap="setTimeRange" data-range="week">本周</view>
+          <view class="filter-option {{timeRange === 'month' ? 'active' : ''}}" bindtap="setTimeRange" data-range="month">本月</view>
+          <view class="filter-option {{timeRange === 'custom' ? 'active' : ''}}" bindtap="setTimeRange" data-range="custom">自定义</view>
+        </view>
+        
+        <view class="date-range" wx:if="{{timeRange === 'custom'}}">
+          <picker mode="date" value="{{startDate}}" bindchange="bindStartDateChange">
+            <view class="date-picker">{{startDate || '开始日期'}}</view>
+          </picker>
+          <text class="date-separator">至</text>
+          <picker mode="date" value="{{endDate}}" bindchange="bindEndDateChange">
+            <view class="date-picker">{{endDate || '结束日期'}}</view>
+          </picker>
+        </view>
+      </view>
+
+
+      
+      <!-- <view class="filter-section">
+        <view class="section-title">开发情况</view>
+        <view class="filter-options">
+          <view class="filter-option {{developmentFilters.includes('city') ? 'active' : ''}}" bindtap="toggleDevelopmentFilter" data-type="city">城</view>
+          <view class="filter-option {{developmentFilters.includes('light') ? 'active' : ''}}" bindtap="toggleDevelopmentFilter" data-type="light">光</view>
+        </view>
+      </view> -->
+      
+      <view class="filter-section">
+        <view class="section-title">其他条件</view>
+        <view class="filter-options">
+          <view class="filter-option {{otherFilters.includes('hasPhotos') ? 'active' : ''}}" bindtap="toggleOtherFilter" data-type="hasPhotos">有照片</view>
+          <view class="filter-option {{otherFilters.includes('hasProblem') ? 'active' : ''}}" bindtap="toggleOtherFilter" data-type="hasProblem">有问题</view>
+          <view class="filter-option {{otherFilters.includes('hasSolution') ? 'active' : ''}}" bindtap="toggleOtherFilter" data-type="hasSolution">有解决方案</view>
+        </view>
+      </view>
+      
+      <view class="filter-buttons">
+        <button class="btn-reset" bindtap="resetFilters">重置</button>
+        <button class="btn-confirm" bindtap="applyFilters">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

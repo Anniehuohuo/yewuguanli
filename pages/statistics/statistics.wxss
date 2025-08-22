@@ -1,4 +1,4 @@
-/* 统计页面样式 */
+/* pages/statistics/statistics.wxss */
 .container {
   background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
   min-height: 100vh;

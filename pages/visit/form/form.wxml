@@ -1,0 +1,204 @@
+<!--pages/visit/form/form.wxml-->
+<view class="container">
+  <form bindsubmit="submitForm">
+    <!-- 客户选择 -->
+    <view class="card">
+      <view class="card-header">
+        <text>客户信息</text>
+      </view>
+      <view class="card-body">
+        <view class="form-group">
+          <text class="form-label">客户 <text class="required">*</text></text>
+          <view class="customer-selector" bindtap="{{isEdit ? '' : 'selectCustomer'}}">
+            <text wx:if="{{customer.name}}">{{customer.name}}</text>
+            <text wx:else class="placeholder">请选择客户</text>
+            <text wx:if="{{!isEdit}}" class="selector-arrow">></text>
+          </view>
+        </view>
+        
+        <view class="form-group" wx:if="{{customer.name}}">
+          <text class="form-label">联系人</text>
+          <text class="form-text">{{customer.contact || '无'}}</text>
+        </view>
+        
+        <view class="form-group" wx:if="{{customer.name}}">
+          <text class="form-label">电话</text>
+          <text class="form-text">{{customer.phone || '无'}}</text>
+        </view>
+        
+        <view class="form-group" wx:if="{{customer.name}}">
+          <text class="form-label">地址</text>
+          <text class="form-text">{{customer.address || '无'}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 拜访信息 -->
+    <view class="card">
+      <view class="card-header">
+        <text>拜访信息</text>
+      </view>
+      <view class="card-body">
+        <view class="form-group">
+          <text class="form-label">拜访时间 <text class="required">*</text></text>
+          <picker mode="date" value="{{visitDate}}" start="2020-01-01" end="2030-12-31" bindchange="bindDateChange">
+            <view class="picker-view">
+              <text>{{visitDate || '请选择日期'}}</text>
+              <text class="picker-arrow">></text>
+            </view>
+          </picker>
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">上架</text>
+          <input class="form-control" name="listing" placeholder="请输入上架情况" value="{{visitData.listing}}" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">开发 <text class="required">*</text></text>
+          <view class="development-display">
+            <text class="development-text">城光学院</text>
+          </view>
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">开发方式</text>
+          <input class="form-control" name="developmentMethod" placeholder="请输入开发方式" value="{{visitData.developmentMethod}}" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">开单</text>
+          <textarea class="form-textarea" name="order" placeholder="请输入开单情况" value="{{visitData.order}}" maxlength="-1"></textarea>
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">问题</text>
+          <textarea class="form-textarea" name="problem" placeholder="请输入问题" value="{{visitData.problem}}" maxlength="-1"></textarea>
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">解决方案</text>
+          <textarea class="form-textarea" name="solution" placeholder="请输入解决方案" value="{{visitData.solution}}" maxlength="-1"></textarea>
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">案例</text>
+          <textarea class="form-textarea" name="case" placeholder="请输入案例" value="{{visitData.case}}" maxlength="-1"></textarea>
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">库存</text>
+          <input class="form-control" name="inventory" placeholder="请输入库存情况" value="{{visitData.inventory}}" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">出货</text>
+          <input class="form-control" name="shipping" placeholder="请输入出货情况" value="{{visitData.shipping}}" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">铺垫</text>
+          <input class="form-control" name="foundation" placeholder="请输入铺垫情况" value="{{visitData.foundation}}" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">补货</text>
+          <input class="form-control" name="replenishment" placeholder="请输入补货情况" value="{{visitData.replenishment}}" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">培训</text>
+          <input class="form-control" name="training" placeholder="请输入培训情况" value="{{visitData.training}}" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">微信</text>
+          <input class="form-control" name="wechat" placeholder="请输入微信情况" value="{{visitData.wechat}}" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">辅助工具</text>
+          <input class="form-control" name="tools" placeholder="请输入辅助工具情况" value="{{visitData.tools}}" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">反馈</text>
+          <textarea class="form-textarea" name="feedback" placeholder="请输入反馈情况" value="{{visitData.feedback}}" maxlength="-1"></textarea>
+        </view>
+        
+        <!-- 自定义字段 -->
+        <block wx:for="{{customFields}}" wx:key="name">
+          <view class="form-group">
+            <text class="form-label">{{item.label}}</text>
+            <input wx:if="{{item.type === 'text'}}" class="form-control" name="custom_{{item.name}}" placeholder="请输入{{item.label}}" value="{{item.value}}" />
+            <textarea wx:if="{{item.type === 'textarea'}}" class="form-textarea" name="custom_{{item.name}}" placeholder="请输入{{item.label}}" value="{{item.value}}" maxlength="-1"></textarea>
+          </view>
+        </block>
+        
+        <!-- 添加自定义字段按钮 -->
+        <view class="add-field-btn" bindtap="showAddFieldModal">
+          <text class="add-field-icon">+</text>
+          <text class="add-field-text">添加自定义字段</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 照片上传 -->
+    <view class="card">
+      <view class="card-header">
+        <text>照片</text>
+      </view>
+      <view class="card-body">
+        <view class="upload-container">
+          <view class="upload-item" wx:for="{{photos}}" wx:key="*this">
+            <image src="{{item}}" mode="aspectFill"></image>
+            <view class="upload-item-delete" catchtap="deletePhoto" data-index="{{index}}">×</view>
+          </view>
+          <view class="upload-add" bindtap="chooseImage" wx:if="{{photos.length < 9}}">
+            <text class="upload-add-icon">+</text>
+            <text class="upload-add-text">添加照片</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 提交按钮 -->
+    <view class="form-actions">
+      <button class="btn btn-default" bindtap="cancelEdit">取消</button>
+      <button class="btn btn-primary" form-type="submit">保存</button>
+    </view>
+  </form>
+</view>
+
+<!-- 添加自定义字段弹窗 -->
+<view class="modal {{showAddField ? 'show' : ''}}">
+  <view class="modal-content">
+    <view class="modal-header">
+      <text>添加自定义字段</text>
+      <text class="modal-close" bindtap="hideAddFieldModal">×</text>
+    </view>
+    <view class="modal-body">
+      <view class="form-group">
+        <text class="form-label">字段名称</text>
+        <input class="form-control" placeholder="请输入字段名称" bindinput="inputFieldName" value="{{newField.label}}" />
+      </view>
+      <view class="form-group">
+        <text class="form-label">字段类型</text>
+        <radio-group bindchange="selectFieldType">
+          <label class="radio-item">
+            <radio value="text" checked="{{newField.type === 'text'}}" />
+            <text class="radio-text">单行文本</text>
+          </label>
+          <label class="radio-item">
+            <radio value="textarea" checked="{{newField.type === 'textarea'}}" />
+            <text class="radio-text">多行文本</text>
+          </label>
+        </radio-group>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn btn-default" bindtap="hideAddFieldModal">取消</button>
+      <button class="btn btn-primary" bindtap="addCustomField">确定</button>
+    </view>
+  </view>
+</view>

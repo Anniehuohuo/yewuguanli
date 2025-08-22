@@ -1,0 +1,157 @@
+<!-- pages/visit/detail/detail.wxml -->
+<view class="container">
+  <!-- 客户信息 -->
+  <view class="customer-info">
+    <view class="customer-name">{{customer.name}}</view>
+    <view class="customer-contact">
+      <text>联系人：{{customer.contact}}</text>
+      <text class="phone" bindtap="callPhone">{{customer.phone}}</text>
+    </view>
+    <view class="customer-address" bindtap="viewLocation">{{customer.address}}</view>
+  </view>
+  
+  <!-- 拜访信息 -->
+  <view class="visit-info">
+    <view class="info-item">
+      <view class="item-label">拜访时间</view>
+      <view class="item-value">{{visit.visitTime}}</view>
+    </view>
+    
+    <block wx:if="{{visit.development && visit.development.length > 0}}">
+      <view class="info-item">
+        <view class="item-label">开发情况</view>
+        <view class="item-value">
+          <view class="tag" wx:for="{{visit.development}}" wx:key="*this">{{item === 'city' ? '城' : (item === 'light' ? '光' : item === 'learn' ? '学' :item === 'yuan' ? '院' : item)}}</view>
+        </view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.developmentMethod && visit.developmentMethod.length > 0}}">
+      <view class="info-item">
+        <view class="item-label">开发方式</view>
+        <view class="item-value">{{visit.developmentMethod}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.order}}">
+      <view class="info-item">
+        <view class="item-label">开单</view>
+        <view class="item-value">{{visit.order}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.problem}}">
+      <view class="info-item">
+        <view class="item-label">问题</view>
+        <view class="item-value">{{visit.problem}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.solution}}">
+      <view class="info-item">
+        <view class="item-label">解决方案</view>
+        <view class="item-value">{{visit.solution}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.case}}">
+      <view class="info-item">
+        <view class="item-label">案例</view>
+        <view class="item-value">{{visit.case}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.inventory}}">
+      <view class="info-item">
+        <view class="item-label">库存</view>
+        <view class="item-value">{{visit.inventory}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.shipping}}">
+      <view class="info-item">
+        <view class="item-label">出货</view>
+        <view class="item-value">{{visit.shipping}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.foundation}}">
+      <view class="info-item">
+        <view class="item-label">铺垫</view>
+        <view class="item-value">{{visit.foundation}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.replenishment}}">
+      <view class="info-item">
+        <view class="item-label">补货</view>
+        <view class="item-value">{{visit.replenishment}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.training}}">
+      <view class="info-item">
+        <view class="item-label">培训</view>
+        <view class="item-value">{{visit.training}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.wechat}}">
+      <view class="info-item">
+        <view class="item-label">微信</view>
+        <view class="item-value">{{visit.wechat}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.tools}}">
+      <view class="info-item">
+        <view class="item-label">辅助工具</view>
+        <view class="item-value">{{visit.tools}}</view>
+      </view>
+    </block>
+    
+    <block wx:if="{{visit.feedback}}">
+      <view class="info-item">
+        <view class="item-label">反馈</view>
+        <view class="item-value">{{visit.feedback}}</view>
+      </view>
+    </block>
+    
+    <!-- 自定义字段 -->
+    <block wx:for="{{visit.customFields}}" wx:key="name">
+      <view class="info-item">
+        <view class="item-label">{{item.name}}</view>
+        <view class="item-value">{{item.value}}</view>
+      </view>
+    </block>
+  </view>
+  
+  <!-- 照片 -->
+  <block wx:if="{{visit.photos && visit.photos.length > 0}}">
+    <view class="photos-section">
+      <view class="section-title">照片</view>
+      <view class="photos-container">
+        <view class="photo-item" wx:for="{{visit.photos}}" wx:key="*this" bindtap="previewImage" data-url="{{item}}">
+          <image src="{{item}}" mode="aspectFill"></image>
+        </view>
+      </view>
+    </view>
+  </block>
+  
+  <!-- 底部操作按钮 -->
+  <view class="footer-buttons">
+    <button class="btn-secondary" bindtap="goBack">返回</button>
+    <button class="btn-primary" bindtap="editVisit">编辑</button>
+  </view>
+  
+  <!-- 地图弹窗 -->
+  <view class="map-modal" wx:if="{{showMap}}">
+    <view class="map-container">
+      <map id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="16" markers="{{markers}}" show-location></map>
+      <view class="map-buttons">
+        <button class="btn-secondary" bindtap="closeMap">关闭</button>
+        <button class="btn-primary" bindtap="openLocation">导航</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,203 @@
+/* pages/visit/detail/detail.wxss */
+.container {
+  padding: 20rpx;
+  padding-bottom: 120rpx;
+}
+
+/* 客户信息 */
+.customer-info {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.customer-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.customer-contact {
+  display: flex;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.phone {
+  color: #007aff;
+}
+
+.customer-address {
+  font-size: 28rpx;
+  color: #666;
+  padding-left: 30rpx;
+  position: relative;
+}
+
+.customer-address::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24rpx;
+  height: 24rpx;
+  background-image: url("data:image/svg+xml,%3Csvg t='1682504538440' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='2420' width='24' height='24'%3E%3Cpath d='M512 85.333333c-211.968 0-384 172.032-384 384 0 250.368 320.704 499.029333 334.336 510.976 4.352 3.797333 9.856 5.674667 15.36 5.674667 0.106667 0 0.213333 0 0.298667-0.021333 5.632-0.106667 11.178667-2.176 15.488-6.250667C507.904 965.973333 896 693.461333 896 469.333333c0-211.968-172.032-384-384-384z m0 469.333334c-94.101333 0-170.666667-76.544-170.666667-170.666667s76.565333-170.666667 170.666667-170.666667c94.101333 0 170.666667 76.544 170.666667 170.666667s-76.565333 170.666667-170.666667 170.666667z' fill='%23666666' p-id='2421'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* 拜访信息 */
+.visit-info {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.info-item {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.item-label {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+}
+
+.item-value {
+  font-size: 30rpx;
+  color: #333;
+  word-break: break-all;
+}
+
+.tag {
+  display: inline-block;
+  background-color: #f0f0f0;
+  color: #666;
+  font-size: 24rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 6rpx;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+/* 照片 */
+.photos-section {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.photos-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.photo-item {
+  width: 220rpx;
+  height: 220rpx;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8rpx;
+}
+
+.photo-item:nth-child(3n) {
+  margin-right: 0;
+}
+
+.photo-item image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 底部操作按钮 */
+.footer-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  padding: 20rpx;
+  background-color: #fff;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.footer-buttons button {
+  flex: 1;
+  margin: 0 10rpx;
+  font-size: 30rpx;
+  border-radius: 10rpx;
+}
+
+.btn-primary {
+  background-color: #007aff;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* 地图弹窗 */
+.map-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-container {
+  width: 90%;
+  height: 80%;
+  background-color: #fff;
+  border-radius: 10rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-container map {
+  flex: 1;
+  width: 100%;
+}
+
+.map-buttons {
+  display: flex;
+  padding: 20rpx;
+}
+
+.map-buttons button {
+  flex: 1;
+  margin: 0 10rpx;
+  font-size: 30rpx;
+  border-radius: 10rpx;
+}

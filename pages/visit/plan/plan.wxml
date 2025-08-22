@@ -1,0 +1,222 @@
+<!-- pages/visit/plan/plan.wxml -->
+<view class="container">
+  <!-- 日期筛选栏 -->
+  <view class="date-filter-section">
+    <view class="date-filter-header">
+      <text class="filter-title">📅 拜访计划</text>
+      <view class="filter-actions">
+        <picker mode="date" value="{{selectedDate}}" bindchange="onDatePickerChange">
+          <view class="filter-btn">
+            <text class="filter-date">{{selectedDateDisplay || '选择日期'}}</text>
+            <text class="filter-arrow">▼</text>
+          </view>
+        </picker>
+        <view class="filter-clear" wx:if="{{selectedDate}}" bindtap="clearDateFilter">
+          <text class="clear-icon">✕</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 快捷日期选择 -->
+    <view class="quick-date-tabs">
+      <view class="date-tab {{currentDateTab === 'today' ? 'active' : ''}}" bindtap="selectQuickDate" data-type="today">
+        今天
+      </view>
+      <view class="date-tab {{currentDateTab === 'tomorrow' ? 'active' : ''}}" bindtap="selectQuickDate" data-type="tomorrow">
+        明天
+      </view>
+      <view class="date-tab {{currentDateTab === 'week' ? 'active' : ''}}" bindtap="selectQuickDate" data-type="week">
+        本周
+      </view>
+      <view class="date-tab {{currentDateTab === 'all' ? 'active' : ''}}" bindtap="selectQuickDate" data-type="all">
+        全部
+      </view>
+    </view>
+    
+    <!-- 筛选结果统计 -->
+    <view class="filter-stats" wx:if="{{filteredPlans.length > 0 || selectedDate}}">
+      <text class="stats-text">共找到 {{filteredPlans.length}} 条计划</text>
+      <text class="stats-date" wx:if="{{selectedDateDisplay}}">（{{selectedDateDisplay}}）</text>
+    </view>
+  </view>
+
+  <!-- 搜索栏 -->
+  <!-- <view class="search-section">
+    <view class="search-bar">
+      <input class="search-input" placeholder="搜索客户或备注" value="{{searchKeyword}}" bindinput="onSearchInput" />
+      <view class="search-icon">🔍</view>
+    </view>
+  </view> -->
+
+  <!-- 计划列表 -->
+  <view class="plan-list" wx:if="{{filteredPlans.length > 0}}">
+    <view class="plan-card" wx:for="{{filteredPlans}}" wx:key="id" bindtap="viewPlanDetail" data-id="{{item.id}}">
+      <view class="card-header">
+        <view class="customer-section">
+          <view class="customer-avatar">{{item.customerName.charAt(0)}}</view>
+          <view class="customer-info">
+            <view class="customer-name-row">
+              <text class="customer-name">{{item.customerName}}</text>
+              <text class="visit-tag" wx:if="{{item.isNearbyVisit}}">顺访</text>
+            </view>
+            <view class="plan-time">📅 {{item.planDate}} {{item.planTime}}</view>
+            <view class="route-order" wx:if="{{item.routeOrder}}">🗺️ 第{{item.routeOrder}}站</view>
+          </view>
+        </view>
+        <view class="priority-badge priority-{{item.priority}}">{{item.priority === 'high' ? '高' : item.priority === 'low' ? '低' : '普通'}}</view>
+      </view>
+      
+      <view class="card-content" wx:if="{{item.remark}}">
+        <view class="plan-remark">💬 {{item.remark}}</view>
+      </view>
+      
+      <view class="card-footer">
+        <view class="status-section">
+          <view class="status-badge status-{{item.status}}">
+            <text wx:if="{{item.status === 'pending'}}">⏳ 待执行</text>
+            <text wx:elif="{{item.status === 'completed'}}">✅ 已完成</text>
+            <text wx:else>❌ 已取消</text>
+          </view>
+        </view>
+        <view class="action-section">
+          <view class="action-btn call-btn" catchtap="callCustomer" data-phone="{{item.customerPhone}}" wx:if="{{item.customerPhone}}">
+            📞
+          </view>
+          <view class="action-btn start-btn" catchtap="startVisit" data-id="{{item.id}}" wx:if="{{item.status === 'pending'}}">
+            🚀 开始
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <view class="empty-icon">📋</view>
+    <view class="empty-title">暂无拜访计划</view>
+    <view class="empty-desc">点击右下角按钮添加拜访计划</view>
+  </view>
+
+  <!-- 悬浮按钮组 -->
+  <view class="fab-group">
+    <!-- 路径规划按钮 -->
+    <view class="fab-btn fab-route" bindtap="optimizeRoute">
+      <text class="fab-icon">🗺️</text>
+    </view>
+    <!-- 添加计划按钮 -->
+    <view class="fab-btn fab-add" bindtap="showAddPlan">
+      <text class="fab-icon">+</text>
+    </view>
+  </view>
+
+  <!-- 添加计划弹窗 -->
+  <view class="modal-overlay" wx:if="{{showAddModal}}" bindtap="hideAddModal">
+    <view class="modal-content" catchtap="true">
+      <view class="modal-header">
+        <text class="modal-title">添加拜访计划</text>
+        <view class="modal-close" bindtap="hideAddModal">×</view>
+      </view>
+      
+      <view class="modal-body">
+        <!-- 客户选择 -->
+        <view class="form-item">
+          <view class="form-label">选择客户 *</view>
+          <view class="customer-selector" bindtap="showCustomerSearch">
+            <text class="selector-text" wx:if="{{newPlan.customerName}}">{{newPlan.customerName}}</text>
+            <text class="selector-placeholder" wx:else>点击选择客户</text>
+            <text class="selector-arrow">›</text>
+          </view>
+        </view>
+        
+        <!-- 日期选择 -->
+        <view class="form-item">
+          <view class="form-label">计划日期 *</view>
+          <picker mode="date" value="{{newPlan.planDate}}" bindchange="bindDateChange">
+            <view class="picker-input">
+              <text>{{newPlan.planDate || '选择日期'}}</text>
+              <text class="picker-arrow">›</text>
+            </view>
+          </picker>
+        </view>
+        
+        <!-- 时间选择 -->
+        <view class="form-item">
+          <view class="form-label">计划时间</view>
+          <picker range="{{timeOptions}}" value="{{newPlan.planTime}}" bindchange="bindTimeChange">
+            <view class="picker-input">
+              <text>{{newPlan.planTime}}</text>
+              <text class="picker-arrow">›</text>
+            </view>
+          </picker>
+        </view>
+        
+        <!-- 优先级选择 -->
+        <view class="form-item">
+          <view class="form-label">优先级</view>
+          <picker range="{{priorityOptions}}" range-key="label" bindchange="bindPriorityChange">
+            <view class="picker-input">
+              <text>{{newPlan.priority === 'high' ? '高优先级' : newPlan.priority === 'low' ? '低优先级' : '普通'}}</text>
+              <text class="picker-arrow">›</text>
+            </view>
+          </picker>
+        </view>
+        
+        <!-- 备注 -->
+        <view class="form-item">
+          <view class="form-label">备注</view>
+          <textarea class="form-textarea" placeholder="请输入拜访备注" value="{{newPlan.remark}}" bindinput="onRemarkInput" maxlength="-1"></textarea>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <view class="btn btn-cancel" bindtap="hideAddModal">取消</view>
+        <view class="btn btn-confirm" bindtap="savePlan">保存</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 客户搜索弹窗 -->
+  <view class="modal-overlay" wx:if="{{showSearchModal}}" bindtap="hideSearchModal">
+    <view class="search-modal" catchtap="">
+      <view class="search-modal-header">
+        <text class="search-modal-title">选择客户</text>
+        <view class="search-modal-close" bindtap="hideSearchModal">×</view>
+      </view>
+      
+      <view class="search-modal-body">
+        <!-- 搜索框 -->
+        <view class="search-input-wrapper">
+          <view class="search-icon-wrapper">🔍</view>
+          <input class="search-modal-input" placeholder="搜索客户名称、联系人或电话" value="{{searchCustomerKeyword}}" bindinput="onCustomerSearchInput" focus="{{showSearchModal}}" confirm-type="search" />
+          <view class="search-clear-wrapper" wx:if="{{searchCustomerKeyword}}" bindtap="clearCustomerSearch">✕</view>
+        </view>
+        
+        <!-- 新建客户按钮 -->
+        <view class="create-customer-btn" bindtap="createNewCustomer">
+          <text class="create-icon">+</text>
+          <text class="create-text">新建客户</text>
+        </view>
+        
+        <!-- 客户列表 -->
+        <view class="customer-list">
+          <view class="customer-item" wx:for="{{searchResults}}" wx:key="id" bindtap="selectCustomer" data-customer="{{item}}">
+            <view class="customer-item-avatar">{{item.name.charAt(0)}}</view>
+            <view class="customer-item-info">
+              <view class="customer-item-name">{{item.name}}</view>
+              <view class="customer-item-contact">{{item.contact}} {{item.phone}}</view>
+              <view class="customer-item-address">{{item.address}}</view>
+            </view>
+          </view>
+          
+          <view class="no-results" wx:if="{{searchResults.length === 0 && searchCustomerKeyword}}">
+            <text class="no-results-text">未找到相关客户</text>
+          </view>
+          
+          <view class="no-results" wx:if="{{searchResults.length === 0 && !searchCustomerKeyword}}">
+            <text class="no-results-text">请输入关键词搜索客户</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

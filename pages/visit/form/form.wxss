@@ -1,0 +1,266 @@
+/* pages/visit/form/form.wxss */
+.container {
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
+  min-height: 100vh;
+  padding-bottom: 180rpx; /* 为底部按钮留出空间 */
+}
+
+.required {
+  color: #e64340;
+}
+
+/* 客户选择器 */
+.customer-selector {
+  height: 80rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid rgba(24, 144, 255, 0.2);
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10rpx);
+  transition: all 0.3s ease;
+}
+
+.customer-selector:focus {
+  border-color: #1890ff;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 4rpx rgba(24, 144, 255, 0.1);
+}
+
+.placeholder {
+  color: #999;
+}
+
+.selector-arrow {
+  color: #ccc;
+  font-size: 24rpx;
+}
+
+/* 表单文本显示 */
+.form-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 日期选择器 */
+.picker-view {
+  height: 80rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid rgba(24, 144, 255, 0.2);
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10rpx);
+  transition: all 0.3s ease;
+}
+
+.picker-view:focus {
+  border-color: #1890ff;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 4rpx rgba(24, 144, 255, 0.1);
+}
+
+.picker-arrow {
+  color: #ccc;
+  font-size: 24rpx;
+}
+
+/* 复选框组 */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background: rgba(230, 247, 255, 0.6);
+  border-radius: 12rpx;
+  border: 2rpx solid rgba(24, 144, 255, 0.2);
+  transition: all 0.3s ease;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.checkbox-item.checked {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  color: white;
+  box-shadow: 0 4rpx 12rpx rgba(24, 144, 255, 0.3);
+}
+
+/* 开发显示样式 */
+.development-display {
+  padding: 24rpx 32rpx;
+  background: rgba(245, 245, 245, 0.8);
+  border: 2rpx solid rgba(224, 224, 224, 0.5);
+  border-radius: 12rpx;
+  margin-top: 16rpx;
+  backdrop-filter: blur(10rpx);
+  transition: all 0.3s ease;
+}
+
+.development-text {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.checkbox-item checkbox {
+  margin-right: 12rpx;
+}
+
+.checkbox-text {
+  font-size: 28rpx;
+  color: inherit;
+  margin-left: 0;
+}
+
+/* 添加自定义字段按钮 */
+.add-field-btn {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  color: #576b95;
+}
+
+.add-field-icon {
+  font-size: 32rpx;
+  margin-right: 10rpx;
+}
+
+.add-field-text {
+  font-size: 28rpx;
+}
+
+/* 表单操作按钮 */
+.form-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10rpx);
+  box-shadow: 0 -2rpx 20rpx rgba(24, 144, 255, 0.1);
+  z-index: 100;
+}
+
+.form-actions .btn {
+  flex: 1;
+  margin: 0 10rpx;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.form-actions .btn-primary {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  color: white;
+  border: 2rpx solid #1890ff;
+  box-shadow: 0 4rpx 12rpx rgba(24, 144, 255, 0.3);
+}
+
+.form-actions .btn-primary:active {
+  background: linear-gradient(135deg, #0050b3 0%, #1890ff 100%);
+  border-color: #0050b3;
+  box-shadow: 0 2rpx 8rpx rgba(24, 144, 255, 0.4);
+}
+
+.form-actions .btn-secondary {
+  background: rgba(255, 255, 255, 0.8);
+  color: #1890ff;
+  border: 2rpx solid rgba(24, 144, 255, 0.3);
+}
+
+.form-actions .btn-secondary:active {
+  background: rgba(24, 144, 255, 0.1);
+  border-color: #1890ff;
+}
+
+/* 弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  width: 80%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid rgba(24, 144, 255, 0.1);
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(24, 144, 255, 0.2);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 30rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1890ff;
+  background: linear-gradient(135deg, rgba(24, 144, 255, 0.1) 0%, rgba(64, 169, 255, 0.05) 100%);
+  border-bottom: 1rpx solid rgba(24, 144, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-close {
+  font-size: 40rpx;
+  color: #999;
+}
+
+.modal-body {
+  padding: 30rpx;
+}
+
+.modal-footer {
+  padding: 20rpx 30rpx;
+  border-top: 1rpx solid #f0f0f0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-footer .btn {
+  margin-left: 20rpx;
+}
+
+/* 单选按钮 */
+.radio-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.radio-text {
+  font-size: 28rpx;
+  color: #333;
+  margin-left: 8rpx;
+}

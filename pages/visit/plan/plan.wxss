@@ -1,0 +1,758 @@
+/* pages/visit/plan/plan.wxss */
+.container {
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
+  min-height: 100vh;
+  padding-bottom: 120rpx;
+}
+
+/* 日期筛选区域 */
+.date-filter-section {
+  background: #fff;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.date-filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25rpx 30rpx 20rpx;
+}
+
+.filter-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 12rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 20rpx;
+  border: 2rpx solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:active {
+  background: #e9ecef;
+  transform: scale(0.98);
+}
+
+.filter-date {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.filter-arrow {
+  font-size: 20rpx;
+  color: #666;
+  transition: transform 0.3s ease;
+}
+
+.filter-clear {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  background: #ff4757;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.filter-clear:active {
+  transform: scale(0.9);
+}
+
+.clear-icon {
+  font-size: 24rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.quick-date-tabs {
+  display: flex;
+  padding: 0 30rpx 20rpx;
+  gap: 15rpx;
+}
+
+.date-tab {
+  flex: 1;
+  text-align: center;
+  padding: 15rpx 20rpx;
+  font-size: 26rpx;
+  color: #666;
+  background: #f8f9fa;
+  border-radius: 25rpx;
+  border: 2rpx solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.date-tab.active {
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+  color: #fff;
+  border-color: #007aff;
+  font-weight: bold;
+  box-shadow: 0 4rpx 15rpx rgba(0, 122, 255, 0.3);
+}
+
+.date-tab:active {
+  transform: scale(0.98);
+}
+
+.filter-stats {
+  padding: 15rpx 30rpx 25rpx;
+  border-top: 1rpx solid #f0f0f0;
+  background: #fafbfc;
+}
+
+.stats-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.stats-date {
+  font-size: 24rpx;
+  color: #007aff;
+  font-weight: bold;
+}
+
+/* 搜索区域 */
+.search-section {
+  padding: 20rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+  position: relative;
+  background: #f8f9fa;
+  border-radius: 25rpx;
+  padding: 0 50rpx 0 30rpx;
+  height: 70rpx;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  height: 100%;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.search-icon {
+  position: absolute;
+  right: 20rpx;
+  font-size: 32rpx;
+  color: #999;
+}
+
+/* 计划列表 */
+.plan-list {
+  padding: 0 20rpx;
+}
+
+.plan-card {
+  background: #fff;
+  border-radius: 15rpx;
+  margin-bottom: 20rpx;
+  padding: 25rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  border-left: 6rpx solid #007aff;
+  transition: all 0.3s ease;
+}
+
+.plan-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15rpx;
+}
+
+.customer-section {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.customer-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-right: 20rpx;
+}
+
+.customer-info {
+  flex: 1;
+}
+
+.customer-name-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+  gap: 10rpx;
+}
+
+.customer-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.visit-tag {
+  font-size: 20rpx;
+  color: #ff4757;
+  background: rgba(255, 71, 87, 0.1);
+  padding: 4rpx 8rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #ff4757;
+  font-weight: bold;
+}
+
+.plan-time {
+  font-size: 26rpx;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.route-order {
+  font-size: 26rpx;
+  color: #fff;
+  margin-top: 8rpx;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+  display: inline-block;
+  box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.3);
+  min-width: 80rpx;
+  text-align: center;
+}
+
+.priority-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.priority-high {
+  background: #ff4757;
+}
+
+.priority-normal {
+  background: #007aff;
+}
+
+.priority-low {
+  background: #7bed9f;
+}
+
+.card-content {
+  margin-bottom: 15rpx;
+}
+
+.plan-remark {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+  background: #f8f9fa;
+  padding: 15rpx;
+  border-radius: 10rpx;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-section {
+  flex: 1;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6rpx 12rpx;
+  border-radius: 15rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.action-section {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+.action-btn {
+  padding: 12rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80rpx;
+  transition: all 0.3s ease;
+}
+
+.call-btn {
+  background: #28a745;
+  color: #fff;
+}
+
+.start-btn {
+  background: #007bff;
+  color: #fff;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 100rpx 40rpx;
+  color: #999;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+  color: #666;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+/* 悬浮按钮组 */
+.fab-group {
+  position: fixed;
+  right: 30rpx;
+  bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  z-index: 100;
+}
+
+.fab-btn {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 25rpx rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.fab-btn:active {
+  transform: scale(0.9);
+}
+
+.fab-add {
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+  box-shadow: 0 8rpx 25rpx rgba(0, 122, 255, 0.4);
+}
+
+.fab-route {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  box-shadow: 0 8rpx 25rpx rgba(255, 107, 107, 0.4);
+}
+
+.fab-icon {
+  font-size: 48rpx;
+  font-weight: bold;
+}
+
+/* 弹窗样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 40rpx;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 20rpx;
+  width: 100%;
+  max-width: 600rpx;
+  max-height: 80vh;
+  overflow: hidden;
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(50rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  color: #999;
+}
+
+.modal-body {
+  padding: 30rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+  font-weight: bold;
+}
+
+.customer-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  border: 2rpx solid #e9ecef;
+}
+
+.selector-text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.selector-placeholder {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.selector-arrow {
+  font-size: 32rpx;
+  color: #999;
+}
+
+.picker-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  border: 2rpx solid #e9ecef;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.picker-arrow {
+  font-size: 32rpx;
+  color: #999;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  border: 2rpx solid #e9ecef;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.modal-footer {
+  display: flex;
+  padding: 30rpx;
+  border-top: 1rpx solid #eee;
+  gap: 20rpx;
+}
+
+.btn {
+  flex: 1;
+  padding: 25rpx;
+  border-radius: 10rpx;
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel {
+  background: #f8f9fa;
+  color: #666;
+  border: 2rpx solid #e9ecef;
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+  color: #fff;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* 客户搜索弹窗 */
+.search-modal {
+  background: #fff;
+  border-radius: 20rpx;
+  width: 100%;
+  max-width: 700rpx;
+  max-height: 80vh;
+  overflow: hidden;
+  animation: modalSlideIn 0.3s ease;
+}
+
+.search-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.search-modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.search-modal-close {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  color: #999;
+}
+
+.search-modal-body {
+  padding: 30rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 40rpx;
+  background-color: #f8f8f8;
+  padding: 0 20rpx;
+}
+
+.search-icon-wrapper {
+  font-size: 28rpx;
+  color: #999;
+  margin-right: 10rpx;
+}
+
+.search-modal-input {
+  flex: 1;
+  height: 80rpx;
+  font-size: 28rpx;
+  background-color: transparent;
+  border: none;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.search-clear-wrapper {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 10rpx;
+  padding: 10rpx;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  width: 32rpx;
+  height: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-customer-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+  color: #fff;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.create-customer-btn:active {
+  transform: scale(0.98);
+}
+
+.create-icon {
+  font-size: 32rpx;
+  margin-right: 10rpx;
+}
+
+.customer-list {
+  max-height: 400rpx;
+  overflow-y: auto;
+}
+
+.customer-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.customer-item:active {
+  background: #f8f9fa;
+}
+
+.customer-item:last-child {
+  border-bottom: none;
+}
+
+.customer-item-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: bold;
+  margin-right: 20rpx;
+}
+
+.customer-item-info {
+  flex: 1;
+}
+
+.customer-item-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5rpx;
+}
+
+.customer-item-contact {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 5rpx;
+}
+
+.customer-item-address {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.no-results {
+  text-align: center;
+  padding: 60rpx 20rpx;
+  color: #999;
+}
+
+.no-results-text {
+  font-size: 26rpx;
+}

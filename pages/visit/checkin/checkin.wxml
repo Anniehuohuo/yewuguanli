@@ -1,0 +1,131 @@
+<!--pages/visit/checkin/checkin.wxml-->
+<view class="container">
+  <!-- 客户信息 -->
+  <view class="card" wx:if="{{customer.id}}">
+    <view class="card-header">
+      <text>客户信息</text>
+    </view>
+    <view class="card-body">
+      <view class="info-item">
+        <text class="info-label">客户名称</text>
+        <text class="info-value">{{customer.name}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">联系人</text>
+        <text class="info-value">{{customer.contact || '无'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">地址</text>
+        <text class="info-value">{{customer.address || '无'}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 选择客户 -->
+  <view class="card" wx:if="{{!customer.id}}">
+    <view class="card-header">
+      <text>选择客户</text>
+    </view>
+    <view class="card-body">
+      <view class="customer-selector" bindtap="selectCustomer">
+        <text class="placeholder">{{locationStatus === 'success' && nearbyCustomers.length > 0 ? '选择附近客户' : '请选择客户'}}</text>
+        <text class="selector-arrow">></text>
+      </view>
+      <view class="nearby-hint" wx:if="{{locationStatus === 'success' && nearbyCustomers.length > 0}}">
+        <text>📍 发现 {{nearbyCustomers.length}} 个附近客户（2公里内）</text>
+      </view>
+      <view class="nearby-hint" wx:if="{{locationStatus === 'success' && nearbyCustomers.length === 0}}">
+        <text>📍 附近2公里内暂无客户，点击选择其他客户</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 位置信息 -->
+  <view class="card">
+    <view class="card-header">
+      <text>位置信息</text>
+      <text class="refresh-btn" bindtap="refreshLocation">刷新</text>
+    </view>
+    <view class="card-body">
+      <view class="location-info">
+        <view class="location-status {{locationStatus === 'success' ? 'success' : locationStatus === 'error' ? 'error' : ''}}">
+          <text class="location-icon">📍</text>
+          <text class="location-text">{{locationStatusText}}</text>
+        </view>
+        <view class="location-address" wx:if="{{locationStatus === 'success'}}">
+          {{address}}
+        </view>
+      </view>
+      <view class="map-container" wx:if="{{locationStatus === 'success'}}">
+        <map id="locationMap" longitude="{{longitude}}" latitude="{{latitude}}" scale="16" markers="{{markers}}" show-location></map>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 照片上传 -->
+  <view class="card">
+    <view class="card-header">
+      <text>拍照记录</text>
+    </view>
+    <view class="card-body">
+      <view class="upload-container">
+        <view class="upload-item" wx:for="{{photos}}" wx:key="*this">
+          <image src="{{item}}" mode="aspectFill"></image>
+          <view class="upload-item-delete" catchtap="deletePhoto" data-index="{{index}}">×</view>
+        </view>
+        <view class="upload-add" bindtap="takePhoto" wx:if="{{photos.length < 9}}">
+          <text class="upload-add-icon">+</text>
+          <text class="upload-add-text">拍照</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 备注信息 -->
+  <view class="card">
+    <view class="card-header">
+      <text>备注信息</text>
+    </view>
+    <view class="card-body">
+      <textarea class="form-textarea" placeholder="请输入备注信息" bindinput="inputRemark" value="{{remark}}" maxlength="-1"></textarea>
+    </view>
+  </view>
+  
+  <!-- 提交按钮 -->
+  <view class="form-actions">
+    <button class="btn btn-default" bindtap="cancelCheckin">取消</button>
+    <button class="btn btn-primary" bindtap="submitCheckin" disabled="{{!canSubmit}}">提交打卡</button>
+  </view>
+</view>
+
+<!-- 客户选择器弹窗 -->
+<view class="customer-selector-modal" wx:if="{{showCustomerSelector}}">
+  <view class="modal-mask" bindtap="closeCustomerSelector"></view>
+  <view class="modal-content">
+    <view class="modal-header">
+      <text class="modal-title">选择附近客户</text>
+      <text class="modal-close" bindtap="closeCustomerSelector">×</text>
+    </view>
+    <view class="modal-body">
+       <view class="customer-list" wx:if="{{nearbyCustomers.length > 0}}">
+         <view class="customer-item" wx:for="{{nearbyCustomers}}" wx:key="id" bindtap="selectNearbyCustomer" data-index="{{index}}">
+           <view class="customer-info">
+             <text class="customer-name">{{item.name}}</text>
+             <text class="customer-address">{{item.address}}</text>
+           </view>
+           <view class="customer-distance">
+             <text>{{item.distance}}km</text>
+           </view>
+         </view>
+       </view>
+       <view class="empty-customers" wx:else>
+          <text class="empty-icon">📍</text>
+          <text class="empty-text">附近2公里内暂无客户</text>
+          <text class="empty-desc">请点击取消后选择其他客户</text>
+        </view>
+     </view>
+    <view class="modal-footer">
+       <button class="btn btn-default" bindtap="closeCustomerSelector">取消</button>
+     </view>
+  </view>
+</view>

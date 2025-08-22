@@ -1,0 +1,107 @@
+<!--nearby.wxml-->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="header-content">
+      <view class="title">
+        <text class="title-icon">📍</text>
+        <text class="title-text">附近客户</text>
+      </view>
+      <view class="location-status">
+        <text wx:if="{{locationStatus === 'loading'}}" class="status-text loading">正在定位...</text>
+        <text wx:elif="{{locationStatus === 'success'}}" class="status-text success">定位成功</text>
+        <text wx:else class="status-text failed">定位失败</text>
+        <view class="refresh-btn" bindtap="refreshLocation">
+          <text class="refresh-icon">🔄</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="stats-section" wx:if="{{locationStatus === 'success'}}">
+    <view class="stats-card">
+      <view class="stats-item">
+        <text class="stats-number">{{nearbyCustomers.length}}</text>
+        <text class="stats-label">附近客户（2km内）</text>
+      </view>
+      <view class="stats-action">
+        <button class="plan-btn" bindtap="viewVisitPlan">
+          <text class="plan-icon">📅</text>
+          <text>查看拜访计划</text>
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 客户列表 -->
+  <view class="customer-section">
+    <!-- 加载状态 -->
+    <view wx:if="{{locationStatus === 'loading'}}" class="loading-state">
+      <view class="loading-icon">📍</view>
+      <text class="loading-text">正在获取您的位置...</text>
+      <text class="loading-desc">请确保已开启位置权限</text>
+    </view>
+
+    <!-- 定位失败状态 -->
+    <view wx:elif="{{locationStatus === 'failed'}}" class="error-state">
+      <view class="error-icon">❌</view>
+      <text class="error-text">位置获取失败</text>
+      <text class="error-desc">请检查位置权限设置</text>
+      <button class="retry-btn" bindtap="refreshLocation">重新定位</button>
+    </view>
+
+    <!-- 客户列表 -->
+    <view wx:elif="{{nearbyCustomers.length > 0}}" class="customer-list">
+      <view class="list-header">
+        <text class="list-title">附近客户列表</text>
+        <text class="list-count">共{{nearbyCustomers.length}}个客户</text>
+      </view>
+      
+      <view class="customer-item" wx:for="{{nearbyCustomers}}" wx:key="id">
+        <view class="customer-main" bindtap="viewCustomerDetail" data-index="{{index}}">
+          <view class="customer-avatar">
+            <text class="avatar-text">{{item.name.charAt(0)}}</text>
+          </view>
+          <view class="customer-info">
+            <view class="customer-name-row">
+              <text class="customer-name">{{item.name}}</text>
+              <view wx:if="{{item.inPlan}}" class="drop-in-tag">顺访</view>
+            </view>
+            <text class="customer-contact">{{item.contact}} · {{item.phone}}</text>
+            <text class="customer-address">{{item.address}}</text>
+          </view>
+          <view class="customer-distance">
+            <text class="distance-text">{{item.distance}}km</text>
+            <text class="distance-label">距离</text>
+          </view>
+        </view>
+        
+        <view class="customer-actions">
+          <button 
+            class="action-btn {{item.inPlan ? 'disabled' : 'primary'}}" 
+            bindtap="addToVisitPlan" 
+            data-index="{{index}}"
+            disabled="{{item.inPlan || loading}}"
+          >
+            <text class="btn-icon">{{item.inPlan ? '✓' : '+'}}</text>
+            <text class="btn-text">{{item.inPlan ? '已加入' : '顺访'}}</text>
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无客户状态 -->
+    <view wx:else class="empty-state">
+      <view class="empty-icon">🔍</view>
+      <text class="empty-text">附近2公里内暂无客户</text>
+      <text class="empty-desc">您可以尝试扩大搜索范围或添加新客户</text>
+      <view class="empty-actions">
+        <button class="empty-btn" bindtap="refreshLocation">
+          <text class="btn-icon">🔄</text>
+          <text>重新搜索</text>
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

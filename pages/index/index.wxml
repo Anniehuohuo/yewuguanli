@@ -1,0 +1,133 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 头部信息 -->
+  <view class="header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <view class="user-section">
+        <view class="avatar">
+          <open-data type="userAvatarUrl"></open-data>
+        </view>
+        <view class="user-info">
+          <view class="greeting">您好，城光学院欢迎您</view>
+          <view class="user-name">
+            <open-data type="userNickName"></open-data>
+          </view>
+        </view>
+      </view>
+      <view class="date-section">
+        <view class="date">{{currentDate}}</view>
+        <view class="week">{{currentWeek}}</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 数据概览 -->
+  <view class="stats-section">
+    <view class="stats-header">
+      <text class="stats-title">📊 今日概览</text>
+    </view>
+    <view class="stats-grid">
+      <view class="stat-card" bindtap="navigateToCustomers">
+        <view class="stat-icon customer-icon">👥</view>
+        <view class="stat-value">{{todayStats.customers}}</view>
+        <view class="stat-label">新增客户</view>
+      </view>
+      <view class="stat-card" bindtap="viewTodayVisits">
+        <view class="stat-icon visit-icon">📝</view>
+        <view class="stat-value">{{todayStats.visits}}</view>
+        <view class="stat-label">拜访记录</view>
+      </view>
+      <view class="stat-card" bindtap="navigateToCheckins">
+        <view class="stat-icon checkin-icon">📍</view>
+        <view class="stat-value">{{todayStats.checkins}}</view>
+        <view class="stat-label">打卡次数</view>
+      </view>
+      <view class="stat-card" bindtap="navigateToStatistics">
+        <view class="stat-icon photo-icon">📷</view>
+        <view class="stat-value">{{todayStats.photos}}</view>
+        <view class="stat-label">拍照数量</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 快捷功能 -->
+  <view class="quick-actions">
+    <view class="section-title">⚡ 快捷功能</view>
+    <view class="action-grid">
+      <view class="action-item" bindtap="navigateToAddCustomer">
+        <view class="action-icon add-customer">👤</view>
+        <view class="action-label">新增客户</view>
+      </view>
+      <view class="action-item" bindtap="navigateToNearbyCustomers">
+        <view class="action-icon nearby">📍</view>
+        <view class="action-label">附近客户</view>
+      </view>
+      <view class="action-item" bindtap="navigateToVisitPlan">
+        <view class="action-icon visit">📅</view>
+        <view class="action-label">拜访计划</view>
+      </view>
+      <view class="action-item" bindtap="navigateToStatistics">
+        <view class="action-icon statistics">📊</view>
+        <view class="action-label">数据统计</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 最近活动 -->
+  <view class="recent-section">
+    <!-- 最近拜访 -->
+    <view class="recent-card">
+      <view class="recent-header">
+        <view class="recent-title">
+          <text class="title-icon">📝</text>
+          <text class="title-text">最近拜访</text>
+        </view>
+        <text class="view-more" bindtap="navigateToVisits">查看更多 ›</text>
+      </view>
+      <view class="recent-content">
+        <block wx:if="{{recentVisits.length > 0}}">
+          <view class="recent-item" wx:for="{{recentVisits}}" wx:key="id" bindtap="viewVisitDetail" data-id="{{item.id}}">
+            <view class="item-avatar">📝</view>
+            <view class="item-info">
+              <view class="item-title">{{item.customerName}}</view>
+              <view class="item-desc">{{item.visitTime}}</view>
+            </view>
+            <view class="item-arrow">›</view>
+          </view>
+        </block>
+        <view wx:else class="empty-hint">
+          <text class="empty-icon">📝</text>
+          <text class="empty-text">暂无拜访记录</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最近客户 -->
+    <view class="recent-card">
+      <view class="recent-header">
+        <view class="recent-title">
+          <text class="title-icon">👥</text>
+          <text class="title-text">最近客户</text>
+        </view>
+        <text class="view-more" bindtap="navigateToCustomers">查看更多 ›</text>
+      </view>
+      <view class="recent-content">
+        <block wx:if="{{recentCustomers.length > 0}}">
+          <view class="recent-item" wx:for="{{recentCustomers}}" wx:key="id" bindtap="viewCustomerDetail" data-id="{{item.id}}">
+            <view class="item-avatar customer-avatar">{{item.name.charAt(0)}}</view>
+            <view class="item-info">
+              <view class="item-title">{{item.name}}</view>
+              <view class="item-desc">{{item.address}}</view>
+            </view>
+            <view class="item-arrow">›</view>
+          </view>
+        </block>
+        <view wx:else class="empty-hint">
+          <text class="empty-icon">👥</text>
+          <text class="empty-text">暂无客户信息</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

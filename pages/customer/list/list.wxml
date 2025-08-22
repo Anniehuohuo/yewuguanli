@@ -2,77 +2,120 @@
 <view class="container">
   <!-- 搜索栏 -->
   <view class="search-bar">
-    <view class="search-input-wrapper">
-      <image class="search-icon" src="/images/icon/搜索.png" mode="aspectFit"></image>
-      <input 
-        class="search-input" 
-        placeholder="搜索客户姓名、公司或电话"
-        value="{{searchKeyword}}"
-        bindinput="onSearchInput"
-      />
+  <view class="search-input-wrapper">
+    <view class="search-icon">🔍</view>
+    <input class="search-input" placeholder="搜索客户名称、联系人或电话" confirm-type="search" bindinput="onSearchInput" value="{{searchKeyword}}"/>
+  </view>
+  <view class="filter-btn" bindtap="showFilterModal">
+    <text class="filter-icon">⚙️</text>
+  </view>
+  <view class="edit-btn" bindtap="toggleEditMode">
+    <text class="edit-icon">{{editMode ? '完成' : '编辑'}}</text>
+  </view>
+</view>
+
+<!-- 批量操作栏 -->
+<view class="batch-actions" wx:if="{{editMode}}">
+  <view class="batch-left">
+    <view class="select-all-btn" bindtap="toggleSelectAll">
+      <text class="select-all-text">{{selectedCustomers.length === filteredCustomers.length && filteredCustomers.length > 0 ? '取消全选' : '全选'}}</text>
     </view>
-    <view class="filter-btn" bindtap="toggleFilter">
-      <image class="filter-icon" src="/images/icon/筛选.png" mode="aspectFit"></image>
+    <text class="selected-count">已选择 {{selectedCustomers.length}} 项</text>
+  </view>
+  <view class="batch-right">
+    <button class="batch-delete-btn" bindtap="batchDeleteCustomers" disabled="{{selectedCustomers.length === 0}}">
+      <text class="btn-text">删除</text>
+    </button>
+  </view>
+</view>
+
+<!-- 筛选弹窗 -->
+<view class="filter-modal" wx:if="{{showFilter}}">
+  <view class="filter-panel">
+    <view class="filter-header">
+      <text class="filter-title">地址筛选</text>
+      <text class="close-btn" bindtap="hideFilterModal">×</text>
+    </view>
+    
+    <view class="filter-section">
+      <view class="section-title">选择地区</view>
+      <picker mode="region" value="{{region}}" bindchange="bindRegionChange">
+        <view class="picker">
+          <text wx:if="{{region[0]}}">{{region[0]}} {{region[1]}} {{region[2]}}</text>
+          <text wx:else class="placeholder">请选择地区</text>
+        </view>
+      </picker>
+    </view>
+    
+    <view class="filter-buttons">
+      <button class="btn-reset" bindtap="resetFilters">重置</button>
+      <button class="btn-confirm" bindtap="applyFilters">确定</button>
     </view>
   </view>
-
-  <!-- 筛选面板 -->
-  <view class="filter-panel" wx:if="{{showFilter}}">
-    <view class="filter-title">客户类别</view>
-    <view class="filter-options">
-      <view 
-        class="filter-option {{selectedCategory === item.value ? 'active' : ''}}"
-        wx:for="{{categories}}"
-        wx:key="value"
-        data-category="{{item.value}}"
-        bindtap="onCategorySelect"
-      >
-        {{item.label}}
-      </view>
-    </view>
-  </view>
-
+</view>
+  
   <!-- 客户列表 -->
-  <view class="customer-list" wx:if="{{filteredCustomers.length > 0}}">
-    <view 
-      class="customer-item"
-      wx:for="{{filteredCustomers}}"
-      wx:key="id"
-      data-id="{{item.id}}"
-      bindtap="onCustomerTap"
-    >
-      <view class="customer-avatar">
-        <text class="avatar-text">{{item.name.charAt(0)}}</text>
-      </view>
-      <view class="customer-info">
-        <view class="customer-name">
-          {{item.name}}
-          <text class="customer-category category-{{item.category}}">{{item.category}}类</text>
+  <view class="customer-list">
+    <block wx:if="{{filteredCustomers.length > 0}}">
+      <view class="customer-card {{editMode ? 'edit-mode' : ''}} {{selectedCustomers.indexOf(item.id) > -1 ? 'selected' : ''}}" wx:for="{{filteredCustomers}}" wx:key="id" bindtap="{{editMode ? 'toggleSelectCustomer' : 'viewCustomerDetail'}}" data-id="{{item.id}}">
+        <!-- 客户头像和基本信息 -->
+        <view class="card-header">
+          <!-- 编辑模式下的选择框 -->
+          <view class="delete-indicator" wx:if="{{editMode && selectedCustomers.indexOf(item.id) > -1}}">
+            <text class="delete-icon">🗑️</text>
+          </view>
+
+          <view class="customer-avatar">
+            <text class="avatar-text">{{item.name.charAt(0)}}</text>
+          </view>
+          <view class="customer-info">
+            <view class="customer-name">{{item.name}}</view>
+            <view class="customer-contact" wx:if="{{item.contact}}">{{item.contact}}</view>
+            <view class="visit-countdown" wx:if="{{item.visitCountdown !== undefined}}">
+              <text class="countdown-text">拜访倒计时{{item.visitCountdown}}天</text>
+            </view>
+          </view>
+          <view class="card-arrow" wx:if="{{!editMode}}">›</view>
         </view>
-        <view class="customer-company">{{item.company}}</view>
-        <view class="customer-phone">{{item.phone}}</view>
-      </view>
-      <view class="customer-actions">
-        <view 
-          class="action-btn call-btn"
-          data-phone="{{item.phone}}"
-          bindtap="onCallTap"
-        >
-          <image class="action-icon" src="/images/icon/电话.png" mode="aspectFit"></image>
+        
+        <!-- 联系方式 -->
+        <view class="card-content">
+          <view class="info-row" wx:if="{{item.phone}}">
+            <view class="info-icon">📞</view>
+            <view class="info-text">{{item.phone}}</view>
+            <button class="quick-call-btn" catchtap="callCustomer" data-phone="{{item.phone}}">拨打</button>
+          </view>
+          <view class="info-row" wx:if="{{item.address}}">
+            <view class="info-icon">📍</view>
+            <view class="info-text">{{item.address}}</view>
+          </view>
+        </view>
+        
+        <!-- 操作按钮 -->
+        <view class="card-actions">
+          <button class="action-btn primary-btn" catchtap="visitCustomer" data-id="{{item.id}}">
+            <text class="btn-icon">📝</text>
+            <text class="btn-text">拜访</text>
+          </button>
+          <button class="action-btn secondary-btn" catchtap="viewCustomerDetail" data-id="{{item.id}}">
+            <text class="btn-icon">👁</text>
+            <text class="btn-text">详情</text>
+          </button>
         </view>
       </view>
+    </block>
+    
+    <!-- 空状态 -->
+    <view wx:else class="empty-state">
+      <view class="empty-icon">👥</view>
+      <view class="empty-title">暂无客户</view>
+      <view class="empty-desc">点击下方按钮添加您的第一个客户</view>
+      <button class="empty-action-btn" bindtap="addCustomer">立即添加</button>
     </view>
   </view>
-
-  <!-- 空状态 -->
-  <view class="empty-state" wx:else>
-    <image class="empty-icon" src="/images/icon/空状态.png" mode="aspectFit"></image>
-    <view class="empty-text">暂无客户数据</view>
-    <view class="empty-action" bindtap="onAddCustomer">添加客户</view>
-  </view>
-
-  <!-- 添加按钮 -->
-  <view class="add-btn" bindtap="onAddCustomer">
-    <image class="add-icon" src="/images/icon/添加.png" mode="aspectFit"></image>
+  
+  <!-- 悬浮添加按钮 -->
+  <view class="fab" bindtap="addCustomer">
+    <text class="fab-icon">+</text>
   </view>
 </view>

@@ -1,0 +1,367 @@
+/* nearby.wxss */
+.container {
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
+  min-height: 100vh;
+  padding-bottom: 20rpx;
+}
+
+/* 头部样式 */
+.header {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  padding: 40rpx 30rpx 30rpx;
+  color: white;
+  box-shadow: 0 8rpx 32rpx rgba(24, 144, 255, 0.2);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+
+.title-icon {
+  font-size: 48rpx;
+  margin-right: 20rpx;
+}
+
+.title-text {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.location-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-text {
+  font-size: 28rpx;
+  margin-right: 20rpx;
+}
+
+.status-text.loading {
+  color: #ffd700;
+}
+
+.status-text.success {
+  color: #90ee90;
+}
+
+.status-text.failed {
+  color: #ff6b6b;
+}
+
+.refresh-btn {
+  padding: 10rpx;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.refresh-icon {
+  font-size: 32rpx;
+}
+
+/* 统计信息样式 */
+.stats-section {
+  margin: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.stats-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  backdrop-filter: blur(10rpx);
+  border: 2rpx solid rgba(24, 144, 255, 0.1);
+  box-shadow: 0 8rpx 32rpx rgba(24, 144, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stats-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.stats-number {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #1890ff;
+  line-height: 1;
+}
+
+.stats-label {
+  font-size: 28rpx;
+  color: #666;
+  margin-top: 10rpx;
+}
+
+.plan-btn {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  color: white;
+  border: none;
+  border-radius: 25rpx;
+  padding: 20rpx 30rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 15rpx rgba(24, 144, 255, 0.3);
+}
+
+.plan-icon {
+  margin-right: 10rpx;
+  font-size: 32rpx;
+}
+
+/* 客户列表样式 */
+.customer-section {
+  margin: 0 30rpx 30rpx;
+}
+
+/* 加载状态 */
+.loading-state,
+.error-state,
+.empty-state {
+  background: white;
+  border-radius: 20rpx;
+  padding: 80rpx 40rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.loading-icon,
+.error-icon,
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 30rpx;
+  display: block;
+}
+
+.loading-text,
+.error-text,
+.empty-text {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+.loading-desc,
+.error-desc,
+.empty-desc {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+  display: block;
+}
+
+.retry-btn,
+.empty-btn {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  color: white;
+  border: none;
+  border-radius: 25rpx;
+  padding: 25rpx 50rpx;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 4rpx 15rpx rgba(24, 144, 255, 0.3);
+}
+
+.btn-icon {
+  margin-right: 10rpx;
+  font-size: 32rpx;
+}
+
+/* 客户列表 */
+.customer-list {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 24rpx;
+  overflow: hidden;
+  backdrop-filter: blur(10rpx);
+  border: 2rpx solid rgba(24, 144, 255, 0.1);
+  box-shadow: 0 8rpx 32rpx rgba(24, 144, 255, 0.1);
+}
+
+.list-header {
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.list-count {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.customer-item {
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.customer-item:last-child {
+  border-bottom: none;
+}
+
+.customer-main {
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+}
+
+.customer-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 30rpx;
+  flex-shrink: 0;
+}
+
+.avatar-text {
+  color: white;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.customer-info {
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.customer-name-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.customer-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-right: 15rpx;
+}
+
+.drop-in-tag {
+  background: #ff4757;
+  color: white;
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  line-height: 1;
+}
+
+.customer-contact {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.customer-address {
+  font-size: 26rpx;
+  color: #999;
+  display: block;
+}
+
+.customer-distance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20rpx;
+}
+
+.distance-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #1890ff;
+  line-height: 1;
+}
+
+.distance-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 5rpx;
+}
+
+.customer-actions {
+  padding: 0 30rpx 30rpx;
+}
+
+.action-btn {
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.3s ease;
+  min-width: 100rpx;
+  border: 1rpx solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.primary {
+  background: transparent;
+  color: #1890ff;
+  border: 1rpx solid #1890ff;
+}
+
+.action-btn.primary:active {
+  background: rgba(24, 144, 255, 0.1);
+}
+
+.action-btn.disabled {
+  background: transparent;
+  color: #ccc;
+  border: 1rpx solid #e5e5e5;
+}
+
+.btn-text {
+  margin-left: 10rpx;
+}
+
+/* 空状态操作按钮 */
+.empty-actions {
+  margin-top: 20rpx;
+}
+
+.empty-btn {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  color: white;
+  border: none;
+  border-radius: 25rpx;
+  padding: 25rpx 50rpx;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 4rpx 15rpx rgba(24, 144, 255, 0.3);
+}

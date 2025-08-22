@@ -1,119 +1,124 @@
 <!--pages/customer/detail/detail.wxml-->
-<view class="container" wx:if="{{customer}}">
+<view class="container">
   <!-- 客户基本信息 -->
-  <view class="customer-card">
-    <view class="customer-header">
-      <view class="customer-avatar">
-        <text class="avatar-text">{{customer.name.charAt(0)}}</text>
-      </view>
-      <view class="customer-basic">
-        <view class="customer-name">
-          {{customer.name}}
-          <text class="customer-category category-{{customer.category}}">{{customer.category}}类</text>
-        </view>
-        <view class="customer-company">{{customer.company}}</view>
-      </view>
-    </view>
-    
-    <view class="customer-actions">
-      <view class="action-btn call-btn" bindtap="onCallTap">
-        <image class="action-icon" src="/images/icon/电话.png" mode="aspectFit"></image>
-        <text class="action-text">拨打</text>
-      </view>
-      <view class="action-btn message-btn" bindtap="onMessageTap">
-        <image class="action-icon" src="/images/icon/短信.png" mode="aspectFit"></image>
-        <text class="action-text">短信</text>
-      </view>
-      <view class="action-btn edit-btn" bindtap="onEditTap">
-        <image class="action-icon" src="/images/icon/编辑.png" mode="aspectFit"></image>
-        <text class="action-text">编辑</text>
-      </view>
-      <view class="action-btn delete-btn" bindtap="onDeleteTap">
-        <image class="action-icon" src="/images/icon/删除.png" mode="aspectFit"></image>
-        <text class="action-text">删除</text>
-      </view>
-    </view>
-  </view>
-
-  <!-- 详细信息 -->
-  <view class="detail-card">
-    <view class="card-title">详细信息</view>
-    <view class="detail-list">
-      <view class="detail-item">
-        <text class="detail-label">联系电话</text>
-        <text class="detail-value">{{customer.phone}}</text>
-      </view>
-      <view class="detail-item">
-        <text class="detail-label">电子邮箱</text>
-        <text class="detail-value">{{customer.email || '未填写'}}</text>
-      </view>
-      <view class="detail-item">
-        <text class="detail-label">公司地址</text>
-        <text class="detail-value">{{customer.address || '未填写'}}</text>
-      </view>
-      <view class="detail-item">
-        <text class="detail-label">客户类别</text>
-        <text class="detail-value category-{{customer.category}}">{{customer.category}}类客户</text>
-      </view>
-      <view class="detail-item">
-        <text class="detail-label">创建时间</text>
-        <text class="detail-value">{{customer.createTime}}</text>
-      </view>
-      <view class="detail-item" wx:if="{{customer.remark}}">
-        <text class="detail-label">备注信息</text>
-        <text class="detail-value">{{customer.remark}}</text>
-      </view>
-    </view>
-  </view>
-
-  <!-- 相关订单 -->
-  <view class="orders-card">
+  <view class="card">
     <view class="card-header">
-      <text class="card-title">相关订单 ({{orders.length}})</text>
-      <view class="new-order-btn" bindtap="onNewOrderTap">
-        <image class="btn-icon" src="/images/icon/添加.png" mode="aspectFit"></image>
-        <text class="btn-text">新建</text>
+      <text>基本信息</text>
+      <view class="header-actions">
+        <text class="action-btn" bindtap="editCustomer">编辑</text>
+        <text class="action-btn delete" bindtap="deleteCustomer">删除</text>
+      </view>
+    </view>
+    <view class="card-body">
+      <view class="info-item">
+        <text class="info-label">客户名称</text>
+        <text class="info-value">{{customer.name || '无'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">联系人</text>
+        <text class="info-value">{{customer.contact || '无'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">电话</text>
+        <view class="info-value with-action">
+          <text>{{customer.phone || '无'}}</text>
+          <text class="action-text" bindtap="callPhone" wx:if="{{customer.phone}}">拨打</text>
+        </view>
+      </view>
+      <view class="info-item">
+        <text class="info-label">地址</text>
+        <view class="info-value with-action">
+          <text>{{customer.address || '无'}}</text>
+          <text class="action-text" bindtap="viewLocation" wx:if="{{customer.latitude && customer.longitude}}">查看</text>
+        </view>
+      </view>
+      <view class="info-item">
+        <text class="info-label">备注</text>
+        <text class="info-value">{{customer.remark || '无'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">创建时间</text>
+        <text class="info-value">{{customer.createTime || '无'}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 记录切换和显示 -->
+  <view class="card">
+    <view class="card-header">
+      <text>客户记录</text>
+      <text class="action-btn" bindtap="{{currentTab === 'visit' ? 'addVisit' : 'addCheckin'}}">新增</text>
+    </view>
+    
+    <!-- 切换标签 -->
+    <view class="tab-container">
+      <view class="tab-item {{currentTab === 'visit' ? 'active' : ''}}" bindtap="switchTab" data-tab="visit">
+        <text class="tab-text">拜访记录</text>
+        <text class="tab-count">({{visits.length}})</text>
+      </view>
+      <view class="tab-item {{currentTab === 'checkin' ? 'active' : ''}}" bindtap="switchTab" data-tab="checkin">
+        <text class="tab-text">打卡记录</text>
+        <text class="tab-count">({{checkins.length}})</text>
       </view>
     </view>
     
-    <view class="orders-list" wx:if="{{orders.length > 0}}">
-      <view 
-        class="order-item"
-        wx:for="{{orders}}"
-        wx:key="id"
-        data-id="{{item.id}}"
-        bindtap="onOrderTap"
-      >
-        <view class="order-info">
-          <view class="order-title">{{item.title}}</view>
-          <view class="order-meta">
-            <text class="order-amount">¥{{item.amount}}</text>
-            <text class="order-status status-{{item.status}}">{{item.statusText}}</text>
+    <view class="card-body">
+      <!-- 拜访记录 -->
+      <view wx:if="{{currentTab === 'visit'}}">
+        <block wx:if="{{visits.length > 0}}">
+          <view class="visit-item" wx:for="{{visits}}" wx:key="id" bindtap="viewVisitDetail" bindlongpress="deleteVisit" data-id="{{item.id}}">
+            <view class="visit-time">{{item.visitTime}}</view>
+            <view class="visit-content">
+              <view class="visit-summary" wx:if="{{item.summary}}">{{item.summary}}</view>
+              <view class="visit-photos" wx:if="{{item.photos && item.photos.length > 0}}">
+                <image class="visit-photo" wx:for="{{item.photos}}" wx:for-item="photo" wx:key="index" src="{{photo}}" mode="aspectFill" catchtap="previewImage" data-url="{{photo}}" data-urls="{{item.photos}}"></image>
+              </view>
+            </view>
+            <view class="visit-arrow">></view>
           </view>
-          <view class="order-time">{{item.createTime}}</view>
+        </block>
+        <view wx:else class="empty-state">
+          <view class="empty-state-icon">📝</view>
+          <view class="empty-state-text">暂无拜访记录</view>
         </view>
-        <view class="order-arrow">
-          <image class="arrow-icon" src="/images/icon/箭头右.png" mode="aspectFit"></image>
+      </view>
+      
+      <!-- 打卡记录 -->
+      <view wx:if="{{currentTab === 'checkin'}}">
+        <block wx:if="{{checkins.length > 0}}">
+          <view class="checkin-item" wx:for="{{checkins}}" wx:key="id">
+            <view class="checkin-time">{{item.checkinTime}}</view>
+            <view class="checkin-content">
+              <view class="checkin-address" wx:if="{{item.address}}">📍 {{item.address}}</view>
+              <view class="checkin-remark" wx:if="{{item.remark}}">{{item.remark}}</view>
+              <view class="checkin-photos" wx:if="{{item.photos && item.photos.length > 0}}">
+                <image class="checkin-photo" wx:for="{{item.photos}}" wx:for-item="photo" wx:key="index" src="{{photo}}" mode="aspectFill" catchtap="previewImage" data-url="{{photo}}" data-urls="{{item.photos}}"></image>
+              </view>
+            </view>
+          </view>
+        </block>
+        <view wx:else class="empty-state">
+          <view class="empty-state-icon">📷</view>
+          <view class="empty-state-text">暂无打卡记录</view>
         </view>
       </view>
     </view>
-    
-    <view class="empty-orders" wx:else>
-      <image class="empty-icon" src="/images/icon/空状态.png" mode="aspectFit"></image>
-      <text class="empty-text">暂无相关订单</text>
-      <view class="empty-action" bindtap="onNewOrderTap">创建订单</view>
-    </view>
+  </view>
+  
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn btn-primary" bindtap="addVisit">新增拜访</button>
+    <button class="btn btn-default" bindtap="addCheckin">打卡拍照</button>
   </view>
 </view>
 
-<!-- 删除确认弹窗 -->
-<view class="modal-overlay" wx:if="{{showDeleteModal}}" bindtap="onCancelDelete">
-  <view class="modal-content" catchtap="">
-    <view class="modal-title">确认删除</view>
-    <view class="modal-message">删除后将无法恢复，确定要删除该客户吗？</view>
-    <view class="modal-actions">
-      <view class="modal-btn cancel-btn" bindtap="onCancelDelete">取消</view>
-      <view class="modal-btn confirm-btn" bindtap="onConfirmDelete">确定</view>
-    </view>
+<!-- 地图弹窗 -->
+<view class="map-modal {{showMap ? 'show' : ''}}">
+  <view class="map-container">
+    <map id="customerMap" longitude="{{customer.longitude}}" latitude="{{customer.latitude}}" scale="16" markers="{{markers}}" show-location></map>
+  </view>
+  <view class="map-actions">
+    <button class="btn btn-default" bindtap="closeMap">关闭</button>
+    <button class="btn btn-primary" bindtap="openLocation">导航</button>
   </view>
 </view>

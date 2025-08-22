@@ -1,4 +1,4 @@
-<!-- 统计页面 -->
+<!-- pages/statistics/statistics.wxml -->
 <view class="container">
   <!-- 页面头部 -->
   <view class="page-header">

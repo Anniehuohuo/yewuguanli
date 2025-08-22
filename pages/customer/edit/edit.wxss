@@ -1,169 +1,36 @@
 /* pages/customer/edit/edit.wxss */
-.container {
-  padding: 20rpx;
-  background-color: #f5f5f5;
-  min-height: 100vh;
-  padding-bottom: 140rpx;
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
 }
 
-/* 表单区域 */
-.form-section {
-  background: white;
-  border-radius: 20rpx;
-  margin-bottom: 20rpx;
-  overflow: hidden;
+.card-footer .btn {
+  margin-left: 20rpx;
 }
 
-.section-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-  padding: 30rpx 30rpx 20rpx;
-  border-bottom: 1rpx solid #f0f0f0;
+.required {
+  color: #e64340;
 }
 
-.form-item {
-  padding: 25rpx 30rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.form-item:last-child {
-  border-bottom: none;
-}
-
-.form-label {
-  font-size: 28rpx;
-  color: #333;
-  margin-bottom: 15rpx;
+/* 地址输入框样式 */
+.address-input {
   display: flex;
   align-items: center;
 }
 
-.form-label.required::after {
-  content: '*';
-  color: #ff3b30;
-  margin-left: 5rpx;
-}
-
-.form-input {
-  width: 100%;
-  padding: 20rpx 25rpx;
-  background: #f8f9fa;
-  border-radius: 15rpx;
-  font-size: 28rpx;
-  color: #333;
-  border: 1rpx solid #e9ecef;
-}
-
-.form-input:focus {
-  border-color: #007aff;
-  background: white;
-}
-
-.form-textarea {
-  width: 100%;
-  padding: 20rpx 25rpx;
-  background: #f8f9fa;
-  border-radius: 15rpx;
-  font-size: 28rpx;
-  color: #333;
-  border: 1rpx solid #e9ecef;
-  min-height: 120rpx;
-}
-
-.form-textarea:focus {
-  border-color: #007aff;
-  background: white;
-}
-
-.form-picker {
-  width: 100%;
-}
-
-.picker-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20rpx 25rpx;
-  background: #f8f9fa;
-  border-radius: 15rpx;
-  border: 1rpx solid #e9ecef;
-}
-
-.picker-text {
-  font-size: 28rpx;
-  color: #333;
-}
-
-.picker-arrow {
-  width: 24rpx;
-  height: 24rpx;
-  opacity: 0.5;
-}
-
-/* 操作按钮 */
-.action-buttons {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  gap: 20rpx;
-  padding: 20rpx;
-  background: white;
-  border-top: 1rpx solid #f0f0f0;
-}
-
-.action-btn {
+.address-input .form-control {
   flex: 1;
-  padding: 25rpx 0;
-  border-radius: 15rpx;
-  text-align: center;
-  font-size: 30rpx;
-  font-weight: bold;
 }
 
-.cancel-btn {
-  background: #f8f9fa;
-  color: #666;
-  border: 1rpx solid #e9ecef;
+.location-btn {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20rpx;
 }
 
-.save-btn {
-  background: #007aff;
-  color: white;
-}
-
-.save-btn:active {
-  background: #0056cc;
-}
-
-.cancel-btn:active {
-  background: #e9ecef;
-}
-
-/* 响应式调整 */
-@media (max-width: 375px) {
-  .container {
-    padding: 15rpx;
-  }
-  
-  .section-title {
-    font-size: 30rpx;
-    padding: 25rpx 25rpx 15rpx;
-  }
-  
-  .form-item {
-    padding: 20rpx 25rpx;
-  }
-  
-  .form-label {
-    font-size: 26rpx;
-  }
-  
-  .form-input,
-  .form-textarea,
-  .picker-text {
-    font-size: 26rpx;
-  }
+.location-icon {
+  font-size: 40rpx;
 }
